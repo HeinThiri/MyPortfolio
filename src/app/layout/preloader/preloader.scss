@@ -1,0 +1,68 @@
+:host {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-preloader);
+}
+
+.preloader {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+
+.pl-panel {
+  position: absolute;
+  inset: 0;
+  &--1 {
+    background: var(--c-bg);
+  }
+  &--2 {
+    background: var(--grad-aurora);
+  }
+}
+
+.pl-meta {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.6rem;
+  width: min(80vw, 380px);
+}
+
+.pl-mark {
+  font-size: clamp(2.4rem, 6vw, 3.4rem);
+  font-style: italic;
+  letter-spacing: 0.01em;
+  color: var(--c-ink);
+}
+
+.pl-bar {
+  position: relative;
+  width: 100%;
+  height: 2px;
+  background: var(--c-line);
+  border-radius: var(--r-pill);
+  overflow: hidden;
+}
+.pl-bar-fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  background: var(--grad-accent);
+  transition: width 0.15s linear;
+}
+
+.pl-count {
+  font-family: var(--font-body);
+  font-size: var(--fs-small);
+  letter-spacing: var(--tracking-wide);
+  color: var(--c-ink-muted);
+  font-variant-numeric: tabular-nums;
+  small {
+    font-size: 0.6em;
+    margin-left: 2px;
+  }
+}

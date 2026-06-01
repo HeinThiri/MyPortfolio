@@ -1,0 +1,82 @@
+:host {
+  display: contents;
+}
+
+.cursor {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-cursor);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.35s var(--ease-out-soft);
+}
+// State classes live on the host element so encapsulated selectors match.
+:host(.is-visible) .cursor {
+  opacity: 1;
+}
+
+/* Both layers sit at the origin and are moved via translate3d; negative
+   margins keep them centred on the pointer. */
+.cursor-glow,
+.cursor-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  border-radius: 50%;
+  will-change: transform;
+}
+
+/* Soft aurora orb — trails with inertia. */
+.cursor-glow {
+  width: 44px;
+  height: 44px;
+  margin: -22px 0 0 -22px;
+  background: radial-gradient(
+    circle,
+    rgba(126, 156, 201, 0.55),
+    rgba(169, 220, 227, 0.28) 45%,
+    rgba(231, 214, 184, 0) 72%
+  );
+  filter: blur(5px);
+  transition:
+    width 0.4s var(--ease-out-soft),
+    height 0.4s var(--ease-out-soft),
+    margin 0.4s var(--ease-out-soft),
+    opacity 0.4s var(--ease-out-soft);
+}
+
+/* Crisp head dot — tracks tightly. */
+.cursor-dot {
+  width: 7px;
+  height: 7px;
+  margin: -3.5px 0 0 -3.5px;
+  background: var(--c-ink);
+  transition:
+    width 0.3s var(--ease-out-soft),
+    height 0.3s var(--ease-out-soft),
+    margin 0.3s var(--ease-out-soft),
+    opacity 0.3s var(--ease-out-soft);
+}
+
+/* Hover: orb blooms, dot recedes. */
+:host(.is-hover) .cursor-glow {
+  width: 88px;
+  height: 88px;
+  margin: -44px 0 0 -44px;
+}
+:host(.is-hover) .cursor-dot {
+  opacity: 0;
+}
+
+/* Press feedback. */
+:host(.is-down) .cursor-glow {
+  width: 64px;
+  height: 64px;
+  margin: -32px 0 0 -32px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cursor {
+    display: none;
+  }
+}

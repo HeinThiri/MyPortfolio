@@ -1,0 +1,98 @@
+// =============================================================
+//  AURORA — Design Tokens
+//  Refined light-to-neutral palette. Soft, warm, atmospheric.
+//  No harsh neon, no cyberpunk darkness.
+// =============================================================
+
+:root {
+  // ---- Surfaces (soft off-white → warm gray) ----
+  --c-bg:            #f4f1ec; // primary canvas — warm off-white
+  --c-bg-elev:       #fbfaf7; // raised surface
+  --c-bg-sink:       #ece7df; // recessed surface
+  --c-surface:       #ffffff;
+  --c-veil:          rgba(255, 255, 255, 0.55); // frosted base
+
+  // ---- Ink (never pure black — softened charcoal) ----
+  --c-ink:           #1c1b1a;
+  --c-ink-soft:      #3a3733;
+  --c-ink-muted:     #6b6760;
+  --c-ink-faint:     #a8a399;
+  --c-line:          rgba(28, 27, 26, 0.10);
+
+  // ---- Accents (light silver, soft blue, pale cyan, champagne) ----
+  --c-silver:        #c7ccd4;
+  --c-blue:          #8fb3e0;   // soft blue
+  --c-cyan:          #a9dce3;   // pale cyan
+  --c-champagne:     #e7d6b8;   // warm champagne
+  --c-accent:        #7e9cc9;   // primary interactive accent
+  --c-accent-ink:    #5b7bb0;
+
+  // ---- Glow ----
+  --glow-cool:       rgba(143, 179, 224, 0.45);
+  --glow-warm:       rgba(231, 214, 184, 0.40);
+
+  // ---- Gradients (muted, atmospheric) ----
+  --grad-aurora: radial-gradient(120% 120% at 70% 10%, #fdfcfa 0%, #f0ece4 45%, #e7eaf0 100%);
+  --grad-glass:  linear-gradient(135deg, rgba(255,255,255,0.65), rgba(255,255,255,0.18));
+  --grad-accent: linear-gradient(115deg, var(--c-blue), var(--c-cyan) 55%, var(--c-champagne));
+
+  // ---- Typography ----
+  --font-display: 'Inter Tight', system-ui, sans-serif;
+  --font-body:    'Inter', system-ui, sans-serif;
+  --font-serif:   'Instrument Serif', Georgia, serif;
+
+  // Fluid type scale (clamp: min, fluid, max)
+  --fs-hero:   clamp(3.2rem, 9vw, 9.5rem);
+  --fs-h1:     clamp(2.4rem, 5.5vw, 5rem);
+  --fs-h2:     clamp(1.8rem, 3.4vw, 3rem);
+  --fs-h3:     clamp(1.25rem, 2vw, 1.6rem);
+  --fs-lead:   clamp(1.1rem, 1.6vw, 1.45rem);
+  --fs-body:   clamp(0.98rem, 1.1vw, 1.05rem);
+  --fs-small:  0.82rem;
+  --fs-micro:  0.7rem;
+
+  --lh-tight:  1.02;
+  --lh-snug:   1.18;
+  --lh-body:   1.62;
+  --tracking-wide: 0.18em;
+
+  // ---- Spacing scale (8pt-ish, generous whitespace) ----
+  --sp-1: 0.5rem;
+  --sp-2: 1rem;
+  --sp-3: 1.5rem;
+  --sp-4: 2.5rem;
+  --sp-5: 4rem;
+  --sp-6: 6rem;
+  --sp-7: 9rem;
+  --sp-8: 14rem;
+
+  // ---- Radii ----
+  --r-sm: 10px;
+  --r-md: 18px;
+  --r-lg: 28px;
+  --r-xl: 40px;
+  --r-pill: 999px;
+
+  // ---- Elevation (soft, diffuse — premium) ----
+  --shadow-sm: 0 1px 2px rgba(28,27,26,0.04), 0 4px 12px rgba(28,27,26,0.04);
+  --shadow-md: 0 10px 30px -12px rgba(28,27,26,0.12), 0 2px 8px rgba(28,27,26,0.05);
+  --shadow-lg: 0 40px 80px -32px rgba(28,27,26,0.22), 0 8px 24px rgba(28,27,26,0.06);
+  --shadow-glow: 0 0 60px -10px var(--glow-cool);
+
+  // ---- Motion ----
+  --ease-out-soft:  cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out:    cubic-bezier(0.65, 0.05, 0.36, 1);
+  --ease-expo:      cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-fast: 0.35s;
+  --dur-med:  0.7s;
+  --dur-slow: 1.2s;
+
+  // ---- Layout ----
+  --container: 1320px;
+  --gutter: clamp(1.25rem, 4vw, 4rem);
+  --z-canvas: 0;
+  --z-content: 10;
+  --z-nav: 40;
+  --z-cursor: 90;
+  --z-preloader: 100;
+}

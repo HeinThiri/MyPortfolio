@@ -1,0 +1,42 @@
+<header class="nav" [class.is-open]="open()">
+  <a class="nav-brand serif" href="#" (click)="go('#hero', $event)" aria-label="Aurora — home">
+    Hein Thiri Tun<span class="dot">.</span>
+  </a>
+
+  <aurora-glass-surface
+    class="nav-links-shell"
+    width="auto"
+    height="auto"
+    [borderRadius]="100"
+    [distortionScale]="-140"
+    [displace]="0.6"
+    [blur]="10"
+    [opacity]="0.9"
+  >
+    <nav class="nav-links" aria-label="Primary">
+      @for (link of links; track link.target) {
+        <a class="nav-link" [href]="link.target" (click)="go(link.target, $event)">
+          <span class="nav-link-text">{{ link.label }}</span>
+        </a>
+      }
+    </nav>
+  </aurora-glass-surface>
+
+  <a
+    class="nav-cta"
+    href="#contact"
+    [auroraMagnetic]="0.35"
+    (click)="go('#contact', $event)"
+  >
+    Let’s talk
+  </a>
+
+  <button
+    class="nav-burger"
+    [attr.aria-expanded]="open()"
+    aria-label="Toggle menu"
+    (click)="open.set(!open())"
+  >
+    <span></span><span></span>
+  </button>
+</header>

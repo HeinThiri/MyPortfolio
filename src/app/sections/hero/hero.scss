@@ -1,0 +1,100 @@
+@use '../../../styles/mixins' as *;
+
+.hero {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  z-index: var(--z-content);
+}
+
+.hero-inner {
+  position: relative;
+}
+
+.hero-eyebrow {
+  margin-bottom: clamp(1.2rem, 3vh, 2.2rem);
+}
+
+.hero-title {
+  font-size: var(--fs-hero);
+  line-height: var(--lh-tight);
+  font-weight: 600;
+  letter-spacing: -0.035em;
+  max-width: 16ch;
+
+  .reveal-line {
+    display: block;
+    overflow: hidden;
+    padding-bottom: 0.06em;
+  }
+  .word {
+    display: inline-block;
+    will-change: transform;
+  }
+  .serif {
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    background: var(--grad-accent);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+}
+
+.hero-aside {
+  margin-top: clamp(1.6rem, 4vh, 2.6rem);
+  max-width: 44ch;
+  p {
+    font-size: var(--fs-lead);
+    color: var(--c-ink-soft);
+    font-weight: 300;
+  }
+}
+
+.hero-hint {
+  position: absolute;
+  left: 50%;
+  bottom: clamp(1.5rem, 5vh, 3rem);
+  translate: -50% 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.7rem;
+}
+.hero-hint-label {
+  @include eyebrow;
+}
+.hero-hint-track {
+  width: 24px;
+  height: 38px;
+  border: 1px solid var(--c-line);
+  border-radius: var(--r-pill);
+  display: flex;
+  justify-content: center;
+  padding-top: 6px;
+}
+.hero-hint-dot {
+  width: 4px;
+  height: 8px;
+  border-radius: var(--r-pill);
+  background: var(--c-accent);
+  animation: hint-scroll 1.8s var(--ease-in-out) infinite;
+}
+
+@keyframes hint-scroll {
+  0% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+  30% {
+    opacity: 1;
+  }
+  80% {
+    transform: translateY(14px);
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}

@@ -1,0 +1,61 @@
+<div
+  #container
+  class="glass-surface"
+  [class.glass-surface--svg]="svgSupported()"
+  [class.glass-surface--fallback]="!svgSupported()"
+  [style.width]="cssSize(width())"
+  [style.height]="cssSize(height())"
+  [style.borderRadius.px]="borderRadius()"
+  [style.--glass-frost]="backgroundOpacity()"
+  [style.--glass-saturation]="saturation()"
+  [style.--filter-id]="filterUrl()"
+>
+  <svg class="glass-surface__filter" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <filter [attr.id]="filterId" color-interpolation-filters="sRGB" x="0%" y="0%" width="100%" height="100%">
+        <feImage #feImage x="0" y="0" width="100%" height="100%" preserveAspectRatio="none" result="map" />
+
+        <feDisplacementMap #redChannel in="SourceGraphic" in2="map" result="dispRed" />
+        <feColorMatrix
+          in="dispRed"
+          type="matrix"
+          values="1 0 0 0 0
+                  0 0 0 0 0
+                  0 0 0 0 0
+                  0 0 0 1 0"
+          result="red"
+        />
+
+        <feDisplacementMap #greenChannel in="SourceGraphic" in2="map" result="dispGreen" />
+        <feColorMatrix
+          in="dispGreen"
+          type="matrix"
+          values="0 0 0 0 0
+                  0 1 0 0 0
+                  0 0 0 0 0
+                  0 0 0 1 0"
+          result="green"
+        />
+
+        <feDisplacementMap #blueChannel in="SourceGraphic" in2="map" result="dispBlue" />
+        <feColorMatrix
+          in="dispBlue"
+          type="matrix"
+          values="0 0 0 0 0
+                  0 0 0 0 0
+                  0 0 1 0 0
+                  0 0 0 1 0"
+          result="blue"
+        />
+
+        <feBlend in="red" in2="green" mode="screen" result="rg" />
+        <feBlend in="rg" in2="blue" mode="screen" result="output" />
+        <feGaussianBlur #gaussianBlur in="output" stdDeviation="0.7" />
+      </filter>
+    </defs>
+  </svg>
+
+  <div class="glass-surface__content">
+    <ng-content />
+  </div>
+</div>

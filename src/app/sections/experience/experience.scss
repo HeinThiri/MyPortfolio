@@ -1,0 +1,83 @@
+@use '../../../styles/mixins' as *;
+
+.experience {
+  position: relative;
+  z-index: var(--z-content);
+  @include section-pad;
+}
+
+.experience-head {
+  margin-bottom: clamp(3rem, 8vh, 5rem);
+  h2 {
+    font-size: var(--fs-h2);
+    margin-top: 1rem;
+  }
+}
+
+.timeline {
+  position: relative;
+  list-style: none;
+  padding-left: clamp(1.5rem, 5vw, 4rem);
+}
+
+.timeline-track {
+  position: absolute;
+  left: 0;
+  top: 0.5rem;
+  bottom: 0.5rem;
+  width: 2px;
+  background: var(--c-line);
+  border-radius: var(--r-pill);
+  overflow: hidden;
+}
+.timeline-progress {
+  position: absolute;
+  inset: 0;
+  transform-origin: top;
+  background: var(--grad-accent);
+}
+
+.milestone {
+  position: relative;
+  display: grid;
+  grid-template-columns: 9rem 1fr;
+  gap: clamp(1rem, 3vw, 3rem);
+  padding-block: clamp(1.6rem, 4vh, 3rem);
+  border-bottom: 1px solid var(--c-line);
+  &:last-child {
+    border-bottom: none;
+  }
+}
+.milestone-node {
+  position: absolute;
+  left: calc(clamp(1.5rem, 5vw, 4rem) * -1);
+  top: clamp(1.9rem, 4vh, 3.3rem);
+  translate: -50% 0;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--c-bg);
+  border: 2px solid var(--c-accent);
+  box-shadow: 0 0 0 4px var(--c-bg), 0 0 18px var(--glow-cool);
+}
+.milestone-period {
+  @include eyebrow;
+  padding-top: 0.4rem;
+}
+.milestone-role {
+  font-size: var(--fs-h3);
+}
+.milestone-company {
+  color: var(--c-accent-ink);
+  margin-bottom: 0.6rem;
+}
+.milestone-summary {
+  color: var(--c-ink-soft);
+}
+
+@media (max-width: 700px) {
+  .milestone {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+}

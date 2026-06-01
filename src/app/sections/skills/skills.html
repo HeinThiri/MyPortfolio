@@ -1,0 +1,29 @@
+<section id="skills" class="skills" aria-label="Skills and tech stack">
+  <div class="orbit" aria-hidden="true">
+    <span class="orbit-ring orbit-ring--1"></span>
+    <span class="orbit-ring orbit-ring--2"></span>
+    <span class="orbit-ring orbit-ring--3"></span>
+    <span class="orbit-core"></span>
+  </div>
+
+  <div class="container skills-inner">
+    <header class="skills-head">
+      <p class="eyebrow" auroraReveal>(02) — Capabilities</p>
+      <h2 auroraReveal="text">A toolkit tuned for cinematic, performant web.</h2>
+    </header>
+
+    <div class="skills-grid">
+      @for (g of groups; track g.title) {
+        <article class="skill-card glass" auroraReveal data-cursor="hover">
+          <h3 class="skill-card-title">{{ g.title }}</h3>
+          <p class="skill-card-blurb">{{ g.blurb }}</p>
+          <ul class="skill-list">
+            @for (item of g.items; track item) {
+              <li class="skill-chip">{{ item }}</li>
+            }
+          </ul>
+        </article>
+      }
+    </div>
+  </div>
+</section>

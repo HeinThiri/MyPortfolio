@@ -1,0 +1,26 @@
+<section #root id="experience" class="experience" aria-label="Experience timeline">
+  <div class="container">
+    <header class="experience-head">
+      <p class="eyebrow" auroraReveal>(04) — Journey</p>
+      <h2 auroraReveal="text">A steady climb toward craft.</h2>
+    </header>
+
+    <ol class="timeline">
+      <span class="timeline-track" aria-hidden="true">
+        <span class="timeline-progress"></span>
+      </span>
+
+      @for (item of items; track item.period) {
+        <li class="milestone">
+          <span class="milestone-node" aria-hidden="true"></span>
+          <span class="milestone-period">{{ item.period }}</span>
+          <div class="milestone-body">
+            <h3 class="milestone-role">{{ item.role }}</h3>
+            <p class="milestone-company">{{ item.company }}</p>
+            <p class="milestone-summary">{{ item.summary }}</p>
+          </div>
+        </li>
+      }
+    </ol>
+  </div>
+</section>

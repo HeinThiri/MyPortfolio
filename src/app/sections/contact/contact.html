@@ -1,0 +1,40 @@
+<section #root id="contact" class="contact" aria-label="Contact">
+  <div class="contact-glow" aria-hidden="true"></div>
+
+  <div class="container contact-inner">
+    <p class="eyebrow contact-fade">(05) — Let’s create</p>
+
+    <h2 class="contact-headline">
+      Have an idea worth <span class="serif italic">obsessing</span> over?
+    </h2>
+
+    <a
+      class="contact-cta"
+      href="mailto:hello@aurora.dev"
+      auroraMagnetic
+      data-cursor="hover"
+    >
+      <span>hello&#64;aurora.dev</span>
+      <span class="contact-cta-arrow">→</span>
+    </a>
+
+    <ul class="contact-socials contact-fade">
+      @for (s of socials; track s.label) {
+        <li><a [href]="s.href" data-cursor="hover">{{ s.label }}</a></li>
+      }
+    </ul>
+  </div>
+
+  <footer class="footer contact-fade">
+    <div class="container footer-inner">
+      <span class="footer-brand serif italic">Aurora</span>
+      <p class="footer-note">
+        Designed & engineered with Angular, Three.js & GSAP. ©
+        {{ year }} Aurora.
+      </p>
+      <button class="footer-top" (click)="scrollTop()" data-cursor="hover">
+        Back to top ↑
+      </button>
+    </div>
+  </footer>
+</section>

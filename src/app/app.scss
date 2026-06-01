@@ -1,0 +1,27 @@
+:host {
+  display: block;
+  position: relative;
+}
+
+// A soft gradient wash sits between the WebGL canvas and the content,
+// unifying the scene with the light UI and adding atmospheric depth.
+.atmosphere {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    radial-gradient(80% 60% at 50% -10%, rgba(255, 255, 255, 0.85), transparent 60%),
+    radial-gradient(60% 50% at 85% 20%, var(--glow-cool), transparent 55%),
+    radial-gradient(70% 60% at 10% 80%, var(--glow-warm), transparent 60%),
+    var(--grad-aurora);
+  opacity: 0.92;
+  // Let the 3D show through the middle band.
+  -webkit-mask-image: radial-gradient(60% 50% at 50% 38%, transparent 30%, #000 75%);
+  mask-image: radial-gradient(60% 50% at 50% 38%, transparent 30%, #000 75%);
+}
+
+#content {
+  position: relative;
+  z-index: var(--z-content);
+}

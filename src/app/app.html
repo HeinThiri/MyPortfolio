@@ -1,0 +1,21 @@
+<!-- Shared WebGL canvas, fixed behind everything -->
+<aurora-webgl-canvas />
+
+<!-- Soft atmospheric gradient wash over the canvas -->
+<div class="atmosphere" aria-hidden="true"></div>
+
+<aurora-scroll-progress />
+<aurora-site-nav />
+<aurora-custom-cursor />
+
+<main id="content">
+  <aurora-hero />
+  <aurora-about />
+  <aurora-skills />
+  <aurora-projects />
+  <aurora-experience />
+  <aurora-contact />
+</main>
+
+<!-- Boot sequence on top; clears to reveal the hero -->
+<aurora-preloader (done)="onPreloaderDone()" />

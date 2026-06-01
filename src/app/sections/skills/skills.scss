@@ -1,0 +1,132 @@
+@use '../../../styles/mixins' as *;
+
+.skills {
+  position: relative;
+  z-index: var(--z-content);
+  @include section-pad;
+  overflow: hidden;
+}
+
+.skills-head {
+  max-width: 30ch;
+  margin-bottom: clamp(2.5rem, 6vh, 4.5rem);
+  h2 {
+    font-size: var(--fs-h2);
+    margin-top: 1rem;
+  }
+}
+
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(1rem, 2vw, 1.8rem);
+}
+
+.skill-card {
+  padding: clamp(1.6rem, 2.4vw, 2.4rem);
+  border-radius: var(--r-lg);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  transition:
+    transform var(--dur-med) var(--ease-out-soft),
+    box-shadow var(--dur-med) var(--ease-out-soft);
+  &:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-lg), var(--shadow-glow);
+  }
+}
+.skill-card-title {
+  font-size: var(--fs-h3);
+}
+.skill-card-blurb {
+  color: var(--c-ink-muted);
+  font-size: var(--fs-body);
+}
+.skill-list {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: auto;
+}
+.skill-chip {
+  padding: 0.35rem 0.8rem;
+  border-radius: var(--r-pill);
+  font-size: var(--fs-small);
+  color: var(--c-ink-soft);
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid var(--c-line);
+}
+
+/* Orbit decoration */
+.orbit {
+  position: absolute;
+  top: 8%;
+  right: -10%;
+  width: 520px;
+  height: 520px;
+  pointer-events: none;
+  opacity: 0.7;
+}
+.orbit-ring {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  border: 1px solid var(--c-line);
+  border-radius: 50%;
+  &--1 {
+    width: 100%;
+    height: 100%;
+    animation: spin 38s linear infinite;
+  }
+  &--2 {
+    width: 68%;
+    height: 68%;
+    border-color: rgba(143, 179, 224, 0.35);
+    animation: spin 26s linear infinite reverse;
+  }
+  &--3 {
+    width: 40%;
+    height: 40%;
+    border-color: rgba(231, 214, 184, 0.45);
+    animation: spin 18s linear infinite;
+  }
+}
+.orbit-ring::after {
+  content: '';
+  position: absolute;
+  top: -4px;
+  left: 50%;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--c-accent);
+  box-shadow: 0 0 16px var(--glow-cool);
+}
+.orbit-core {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 14%;
+  height: 14%;
+  border-radius: 50%;
+  background: var(--grad-accent);
+  filter: blur(6px);
+  opacity: 0.6;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 900px) {
+  .skills-grid {
+    grid-template-columns: 1fr;
+  }
+  .orbit {
+    display: none;
+  }
+}

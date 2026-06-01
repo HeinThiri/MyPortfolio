@@ -1,0 +1,11 @@
+<div #root class="preloader" role="status" aria-live="polite">
+  <!-- Layered panels create the curtain wipe -->
+  <div class="pl-panel pl-panel--1"></div>
+  <div class="pl-panel pl-panel--2"></div>
+
+  <div class="pl-meta">
+    <span class="pl-mark serif">Aurora</span>
+    <div class="pl-bar"><span class="pl-bar-fill" [style.width.%]="percent()"></span></div>
+    <span class="pl-count">{{ percent() }}<small>%</small></span>
+  </div>
+</div>

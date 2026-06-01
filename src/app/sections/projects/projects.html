@@ -1,0 +1,38 @@
+<section #root id="projects" class="projects" aria-label="Selected work">
+  <div class="container">
+    <header class="projects-head">
+      <p class="eyebrow" auroraReveal>(03) — Selected Work</p>
+      <h2 auroraReveal="text">Experiences engineered to be felt, not just used.</h2>
+    </header>
+
+    <div class="projects-list">
+      @for (p of projects; track p.index) {
+        <article class="project" data-cursor="hover">
+          <div class="project-media" [style.background]="p.accent">
+            <span class="project-index">{{ p.index }}</span>
+            <span class="project-orb"></span>
+          </div>
+
+          <div class="project-info">
+            <div class="project-meta">
+              <span>{{ p.year }}</span>
+              <span>{{ p.role }}</span>
+            </div>
+            <h3 class="project-title">{{ p.title }}</h3>
+            <p class="project-tagline serif italic">{{ p.tagline }}</p>
+            <p class="project-desc">{{ p.description }}</p>
+            <ul class="project-stack">
+              @for (tech of p.stack; track tech) {
+                <li>{{ tech }}</li>
+              }
+            </ul>
+            <button class="project-link" auroraMagnetic>
+              View case study
+              <span class="arrow">→</span>
+            </button>
+          </div>
+        </article>
+      }
+    </div>
+  </div>
+</section>

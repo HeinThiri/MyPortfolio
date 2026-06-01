@@ -1,0 +1,126 @@
+@use '../../../styles/mixins' as *;
+
+.contact {
+  position: relative;
+  z-index: var(--z-content);
+  padding-top: clamp(6rem, 16vh, 14rem);
+  overflow: hidden;
+}
+
+.contact-glow {
+  position: absolute;
+  left: 50%;
+  top: 30%;
+  translate: -50% -50%;
+  width: min(80vw, 700px);
+  aspect-ratio: 1;
+  background: radial-gradient(circle, var(--glow-cool), transparent 65%);
+  filter: blur(40px);
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.contact-inner {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: clamp(1.6rem, 4vh, 2.6rem);
+  padding-bottom: clamp(5rem, 14vh, 11rem);
+}
+
+.contact-headline {
+  font-size: clamp(2.6rem, 7vw, 6rem);
+  line-height: 1.02;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  max-width: 16ch;
+  .serif {
+    font-weight: 400;
+    background: var(--grad-accent);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+}
+
+.contact-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.1rem 2rem;
+  border-radius: var(--r-pill);
+  font-family: var(--font-display);
+  font-size: clamp(1.1rem, 2.4vw, 1.7rem);
+  font-weight: 500;
+  color: var(--c-ink);
+  @include glass(0.55, 24px, 0.7);
+  transition:
+    transform var(--dur-med) var(--ease-out-soft),
+    box-shadow var(--dur-med) var(--ease-out-soft);
+  &:hover {
+    box-shadow: var(--shadow-lg), var(--shadow-glow);
+  }
+  .contact-cta-arrow {
+    transition: transform var(--dur-fast) var(--ease-out-soft);
+  }
+  &:hover .contact-cta-arrow {
+    transform: translate(5px, -5px);
+  }
+}
+
+.contact-socials {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: clamp(1rem, 3vw, 2.4rem);
+  a {
+    @include eyebrow;
+    position: relative;
+    padding-bottom: 4px;
+    &::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      height: 1px;
+      background: var(--c-ink);
+      transform: scaleX(0);
+      transform-origin: right;
+      transition: transform var(--dur-fast) var(--ease-out-soft);
+    }
+    &:hover::after {
+      transform: scaleX(1);
+      transform-origin: left;
+    }
+  }
+}
+
+.footer {
+  border-top: 1px solid var(--c-line);
+  padding-block: clamp(1.5rem, 4vh, 2.5rem);
+}
+.footer-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.footer-brand {
+  font-size: 1.3rem;
+}
+.footer-note {
+  font-size: var(--fs-small);
+  color: var(--c-ink-muted);
+  margin: 0;
+}
+.footer-top {
+  @include eyebrow;
+  &:hover {
+    color: var(--c-ink);
+  }
+}
