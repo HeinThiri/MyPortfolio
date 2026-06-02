@@ -5,6 +5,9 @@
   min-height: 100svh;
   display: flex;
   align-items: center;
+  // Clear the fixed nav so the title never tucks underneath it.
+  padding-top: clamp(6rem, 12vh, 9rem);
+  padding-bottom: clamp(4rem, 8vh, 6rem);
   z-index: var(--z-content);
 }
 
@@ -17,11 +20,10 @@
 }
 
 .hero-title {
-  font-size: var(--fs-hero);
-  line-height: var(--lh-tight);
+  font-size: 56px;
+  line-height: 1.06;
   font-weight: 600;
-  letter-spacing: -0.035em;
-  max-width: 16ch;
+  letter-spacing: -0.03em;
 
   .reveal-line {
     display: block;
@@ -49,6 +51,11 @@
     font-size: var(--fs-lead);
     color: var(--c-ink-soft);
     font-weight: 300;
+    overflow: hidden; // clip the rising text for the masked reveal
+  }
+  .hero-aside-text {
+    display: inline-block;
+    will-change: transform;
   }
 }
 

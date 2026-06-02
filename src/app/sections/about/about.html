@@ -1,44 +1,58 @@
-<section #root id="about" class="about" aria-label="About">
+<section id="about" class="about" aria-label="About">
   <div class="container about-grid">
     <header class="about-head">
       <p class="eyebrow" auroraReveal>(01) — About</p>
     </header>
-
+    <aurora-card-swap
+      class="about-cards"
+      [width]="320"
+      [height]="220"
+      [cardDistance]="44"
+      [verticalDistance]="54"
+      [delay]="3800"
+      [skewAmount]="5"
+      [pauseOnHover]="true"
+    >
+      <article class="card">
+        <span class="card-kicker">Frontend</span>
+        <h3 class="card-title">Angular interfaces</h3>
+        <p class="card-text">TypeScript &amp; responsive UI — turning UI/UX designs into working apps.</p>
+      </article>
+      <article class="card">
+        <span class="card-kicker">CMS &amp; No-code</span>
+        <h3 class="card-title">WordPress &amp; Wix</h3>
+        <p class="card-text">Responsive, user-friendly sites built and customised end to end.</p>
+      </article>
+      <article class="card">
+        <span class="card-kicker">Backend</span>
+        <h3 class="card-title">C# · ASP.NET Core</h3>
+        <p class="card-text">Supporting backend integration whenever the build needs it.</p>
+      </article>
+    </aurora-card-swap>
     <h2 class="about-statement" auroraReveal="text">
       I am motivated to learn and deliver reliable, high-quality work.
     </h2>
 
     <div class="about-body">
-      <p auroraReveal>
+      <p auroraReveal="blur">
         I am a Frontend Developer with 3 years of experience working with Angular, WordPress, and Wix
-to build responsive and user-friendly websites. I enjoy turning UI/UX designs into real, working
-applications and improving performance and usability. 
+        to build responsive and user-friendly websites. I enjoy turning UI/UX designs into real, working
+          applications and improving performance and usability.
       </p>
       <p auroraReveal>
        I also have experience with C# and ASP.NET Core, allowing me to support backend integration when needed. 
       </p>
     </div>
 
-    <!-- Layered depth cards -->
-    <div class="about-cards" aria-hidden="true">
-      <div class="depth-card glass" data-depth="0.4">
-        <span class="serif italic">Design</span>
-      </div>
-      <div class="depth-card glass depth-card--mid" data-depth="1">
-        <span class="serif italic">Motion</span>
-      </div>
-      <div class="depth-card glass depth-card--front" data-depth="1.8">
-        <span class="serif italic">Code</span>
-      </div>
-    </div>
+   
 
-    <dl class="about-stats">
+    <!-- <dl class="about-stats">
       @for (s of stats; track s.label) {
         <div class="stat" auroraReveal>
           <dt class="stat-value">{{ s.value }}</dt>
           <dd class="stat-label">{{ s.label }}</dd>
         </div>
       }
-    </dl>
+    </dl> -->
   </div>
 </section>

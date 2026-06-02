@@ -1,16 +1,41 @@
 <section id="skills" class="skills" aria-label="Skills and tech stack">
-  <div class="orbit" aria-hidden="true">
-    <span class="orbit-ring orbit-ring--1"></span>
-    <span class="orbit-ring orbit-ring--2"></span>
-    <span class="orbit-ring orbit-ring--3"></span>
-    <span class="orbit-core"></span>
-  </div>
-
   <div class="container skills-inner">
-    <header class="skills-head">
-      <p class="eyebrow" auroraReveal>(02) — Capabilities</p>
-      <h2 auroraReveal="text">A toolkit tuned for cinematic, performant web.</h2>
-    </header>
+    <div class="skills-top">
+      <header class="skills-head">
+        <p class="eyebrow" auroraReveal>(02) — Capabilities</p>
+        <h2 auroraReveal="text">Personal Achievement & Skills</h2>
+        <ul class="achievements" aria-label="Personal achievements">
+          @for (a of achievements; track a) {
+            <li class="achievement" auroraReveal>{{ a }}</li>
+          }
+        </ul>
+      </header>
+
+      <!-- Rotating tech-stack orbit (right of the heading) -->
+      <div
+        class="tech-orbit"
+        role="img"
+        aria-label="Tech stack: Angular, Figma, GitHub, JavaScript, Wix, WordPress"
+      >
+        <span class="orbit-frame" aria-hidden="true"></span>
+        <div class="orbit-core">
+          <span class="orbit-gem" aria-hidden="true"></span>
+          <span class="serif italic">stack</span>
+        </div>
+        <div class="orbit-ring">
+          @for (t of stack; track t.name; let i = $index) {
+            <div class="orbit-item" [style.--a]="(i * 360) / stack.length + 'deg'">
+              <div class="orbit-icon-wrap">
+                <div class="orbit-icon"><img [src]="t.icon" [alt]="t.name" /></div>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+
+    <!-- Personal achievements -->
+  
 
     <div class="skills-grid">
       @for (g of groups; track g.title) {

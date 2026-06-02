@@ -42,7 +42,7 @@
   --font-serif:   'Instrument Serif', Georgia, serif;
 
   // Fluid type scale (clamp: min, fluid, max)
-  --fs-hero:   clamp(3.2rem, 9vw, 9.5rem);
+  --fs-hero:   clamp(2.6rem, 6.2vw, 6rem);
   --fs-h1:     clamp(2.4rem, 5.5vw, 5rem);
   --fs-h2:     clamp(1.8rem, 3.4vw, 3rem);
   --fs-h3:     clamp(1.25rem, 2vw, 1.6rem);
@@ -88,7 +88,7 @@
   --dur-slow: 1.2s;
 
   // ---- Layout ----
-  --container: 1320px;
+  --container: 1600px;
   --gutter: clamp(1.25rem, 4vw, 4rem);
   --z-canvas: 0;
   --z-content: 10;

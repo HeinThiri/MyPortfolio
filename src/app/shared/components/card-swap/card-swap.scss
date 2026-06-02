@@ -1,0 +1,83 @@
+// CardSwap — ViewEncapsulation.None, so every rule is scoped under .card-swap
+// to avoid leaking the generic .card selector across the app.
+
+.card-swap {
+  position: relative;
+  display: block;
+  width: var(--cs-w, 360px);
+  height: var(--cs-h, 240px);
+  perspective: 900px;
+  transform-style: preserve-3d;
+  // GSAP transforms drift the cards up-and-right of this box.
+  overflow: visible;
+}
+
+.card-swap .card {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: var(--cs-w, 360px);
+  height: var(--cs-h, 240px);
+  box-sizing: border-box;
+  padding: clamp(1.2rem, 2vw, 1.8rem);
+  border-radius: var(--r-lg);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  cursor: pointer;
+  will-change: transform;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+
+  // Frosted glass tinted with a project accent (per-card, see below).
+  --card-accent: var(--c-accent);
+  background:
+    linear-gradient(150deg, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.15)),
+    linear-gradient(150deg, var(--card-accent), transparent 62%);
+  backdrop-filter: blur(18px) saturate(160%);
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow:
+    var(--shadow-lg),
+    inset 0 1px 0 rgba(255, 255, 255, 0.7);
+  transition: box-shadow 0.35s var(--ease-out-soft);
+}
+
+// Stagger the stack through the site's accent palette.
+.card-swap .card:nth-child(3n + 1) {
+  --card-accent: var(--c-blue);
+}
+.card-swap .card:nth-child(3n + 2) {
+  --card-accent: var(--c-cyan);
+}
+.card-swap .card:nth-child(3n + 3) {
+  --card-accent: var(--c-champagne);
+}
+
+.card-swap .card.selected {
+  box-shadow:
+    var(--shadow-lg),
+    var(--shadow-glow),
+    inset 0 0 0 1px var(--c-accent);
+}
+
+.card-swap .card-kicker {
+  font-family: var(--font-body);
+  font-size: var(--fs-micro);
+  font-weight: 500;
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--c-accent-ink);
+}
+
+.card-swap .card-title {
+  font-size: var(--fs-h3);
+  font-weight: 600;
+  line-height: 1.15;
+}
+
+.card-swap .card-text {
+  margin-top: auto;
+  color: var(--c-ink-muted);
+  font-size: var(--fs-body);
+}

@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, ElementRef, inject, viewChild } from '@angular/core';
 import { gsap } from 'gsap';
 import { MagneticDirective } from '../../shared/directives/magnetic.directive';
+import { ParallaxDirective } from '../../shared/directives/parallax.directive';
 import { DeviceService } from '../../core/services/device.service';
 import { ScrollService } from '../../core/services/scroll.service';
 
@@ -12,7 +13,7 @@ import { ScrollService } from '../../core/services/scroll.service';
 @Component({
   selector: 'aurora-contact',
   standalone: true,
-  imports: [MagneticDirective],
+  imports: [MagneticDirective, ParallaxDirective],
   templateUrl: './contact.html',
   styleUrl: './contact.scss',
 })

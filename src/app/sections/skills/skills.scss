@@ -7,18 +7,71 @@
   overflow: hidden;
 }
 
-.skills-head {
-  max-width: 30ch;
+// Heading on the left, tech-stack orbit on the right. The orbit column is a
+// capped, fluid width so it never overflows the container's right gutter.
+.skills-top {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) clamp(300px, 24vw, 380px);
+  gap: clamp(1.5rem, 5vw, 4rem);
+  align-items: start;
   margin-bottom: clamp(2.5rem, 6vh, 4.5rem);
+}
+
+.skills-head {
   h2 {
-    font-size: var(--fs-h2);
+    font-size: 41px;
     margin-top: 1rem;
+  }
+}
+
+/* ---- Personal achievements (compact chips under the heading) -------- */
+.achievements {
+  list-style: none;
+  margin: clamp(1.5rem, 3.5vh, 2.75rem) 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.achievement {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.5rem 0.95rem;
+  border-radius: var(--r-pill);
+  font-size: var(--fs-small);
+  font-weight: 500;
+  color: var(--c-ink-soft);
+  background: var(--c-bg-elev);
+  border: 1px solid var(--c-line);
+  box-shadow: var(--shadow-sm);
+  transition:
+    transform 0.3s var(--ease-out-soft),
+    box-shadow 0.3s var(--ease-out-soft),
+    color 0.3s var(--ease-out-soft);
+
+  // Small champagne dot.
+  &::before {
+    content: '';
+    flex: none;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #f6e7bd, var(--c-champagne));
+    box-shadow: 0 0 6px rgba(184, 137, 58, 0.5);
+  }
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+    color: var(--c-accent-ink);
   }
 }
 
 .skills-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: clamp(1rem, 2vw, 1.8rem);
 }
 
@@ -59,74 +112,262 @@
   border: 1px solid var(--c-line);
 }
 
-/* Orbit decoration */
-.orbit {
-  position: absolute;
-  top: 8%;
-  right: -10%;
-  width: 520px;
-  height: 520px;
-  pointer-events: none;
-  opacity: 0.7;
+/* ---- Tech-stack constellation (frosted glass) ------------------------ */
+// A faceted glass-crystal core orbited by frosted-glass coins on a faint
+// concentric grid — all in the site's light glass material, no panel fill.
+$glass-hi: rgba(255, 255, 255, 0.82); // lit facet
+$glass-lo: rgba(199, 204, 212, 0.38); // shaded silver facet
+$glass-tint: rgba(143, 179, 224, 0.16); // soft-blue base tint
+
+.tech-orbit {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  aspect-ratio: 1;
+  margin-inline: auto;
+  align-self: center; // float centered against the taller achievements list
+  // Nudge the orbit left so it pulls clear of the right edge.
+  transform: translateX(clamp(-2.5rem, -3vw, -1rem));
+  display: grid;
+  place-items: center;
+  --r: clamp(76px, 11vw, 184px); // orbit radius
+  --isz: clamp(40px, 4.8vw, 84px); // icon tile size
+
+  // Concentric rings + radial spokes — faint dark lines, fading to the edge.
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background:
+      repeating-conic-gradient(
+        from 0deg at 50% 50%,
+        var(--c-line) 0 0.35deg,
+        transparent 0.35deg 15deg
+      ),
+      repeating-radial-gradient(
+        circle at 50% 50%,
+        var(--c-line) 0 1px,
+        transparent 1px 42px
+      );
+    -webkit-mask-image: radial-gradient(circle at 50% 50%, #000 56%, transparent 84%);
+    mask-image: radial-gradient(circle at 50% 50%, #000 56%, transparent 84%);
+  }
 }
+
+// Thin circle the coins sit on.
+.orbit-frame {
+  position: absolute;
+  z-index: 1;
+  width: calc(var(--r) * 2);
+  height: calc(var(--r) * 2);
+  border-radius: 50%;
+  border: 1px solid var(--c-line);
+  pointer-events: none;
+}
+
+.orbit-core {
+  position: absolute;
+  z-index: 3;
+  width: clamp(80px, 11vw, 116px);
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  font-size: var(--fs-small);
+  letter-spacing: 0.06em;
+  color: var(--c-accent-ink);
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.7);
+
+  // Soft pulsing aura.
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 2px;
+    border-radius: 50%;
+    border: 1px solid var(--c-line);
+    animation: orbit-pulse 3.2s var(--ease-in-out) infinite;
+  }
+
+  .serif {
+    position: relative;
+    z-index: 1;
+  }
+}
+
+// Faceted glass crystal behind the "stack" label — 8 frosted facets radiating
+// from a bright table, frosting the page through it.
+.orbit-gem {
+  position: absolute;
+  z-index: 0;
+  width: 90%;
+  height: 90%;
+  clip-path: polygon(
+    50% 0,
+    85% 15%,
+    100% 50%,
+    85% 85%,
+    50% 100%,
+    15% 85%,
+    0 50%,
+    15% 15%
+  );
+  background:
+    // Facet seam lines at every 45° boundary.
+    repeating-conic-gradient(
+      from -0.6deg at 50% 50%,
+      rgba(28, 27, 26, 0.12) 0 1deg,
+      transparent 1deg 45deg
+    ),
+    // Bright table highlight.
+    radial-gradient(circle at 50% 38%, rgba(255, 255, 255, 0.95) 0 12%, transparent 52%),
+    // 8 alternating frosted facets.
+    conic-gradient(
+      from 0deg at 50% 50%,
+      #{$glass-hi} 0 45deg,
+      #{$glass-lo} 45deg 90deg,
+      #{$glass-hi} 90deg 135deg,
+      #{$glass-lo} 135deg 180deg,
+      #{$glass-hi} 180deg 225deg,
+      #{$glass-lo} 225deg 270deg,
+      #{$glass-hi} 270deg 315deg,
+      #{$glass-lo} 315deg 360deg
+    ),
+    #{$glass-tint};
+  backdrop-filter: blur(8px) saturate(150%);
+  -webkit-backdrop-filter: blur(8px) saturate(150%);
+  filter: drop-shadow(0 8px 18px rgba(28, 27, 26, 0.18));
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.55);
+
+  // Bright diamond "table" facet at the centre.
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 30%;
+    clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(199, 204, 212, 0.6));
+    box-shadow:
+      inset 0 0 6px rgba(255, 255, 255, 0.9),
+      0 0 3px rgba(28, 27, 26, 0.18);
+  }
+}
+
 .orbit-ring {
   position: absolute;
   inset: 0;
-  margin: auto;
-  border: 1px solid var(--c-line);
-  border-radius: 50%;
-  &--1 {
-    width: 100%;
-    height: 100%;
-    animation: spin 38s linear infinite;
-  }
-  &--2 {
-    width: 68%;
-    height: 68%;
-    border-color: rgba(143, 179, 224, 0.35);
-    animation: spin 26s linear infinite reverse;
-  }
-  &--3 {
-    width: 40%;
-    height: 40%;
-    border-color: rgba(231, 214, 184, 0.45);
-    animation: spin 18s linear infinite;
-  }
-}
-.orbit-ring::after {
-  content: '';
-  position: absolute;
-  top: -4px;
-  left: 50%;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--c-accent);
-  box-shadow: 0 0 16px var(--glow-cool);
-}
-.orbit-core {
-  position: absolute;
-  inset: 0;
-  margin: auto;
-  width: 14%;
-  height: 14%;
-  border-radius: 50%;
-  background: var(--grad-accent);
-  filter: blur(6px);
-  opacity: 0.6;
+  z-index: 2;
+  animation: orbit-spin 34s linear infinite;
 }
 
-@keyframes spin {
+// Zero-size anchor placed on the circle at angle --a.
+.orbit-item {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  transform: rotate(var(--a)) translateX(var(--r));
+}
+
+// Cancels the item's angle so the coin sits upright within the ring.
+.orbit-icon-wrap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: var(--isz);
+  height: var(--isz);
+  margin: calc(var(--isz) / -2);
+  transform: rotate(calc(-1 * var(--a)));
+}
+
+// Frosted-glass coin with a light face holding the brand logo; counter-spins
+// the ring so the logo stays upright.
+.orbit-icon {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  @include glass(0.55, 12px, 0.7);
+  animation: orbit-spin-rev 34s linear infinite;
+  transition:
+    transform 0.35s var(--ease-out-soft),
+    box-shadow 0.35s var(--ease-out-soft);
+
+  // Light face the logo sits on.
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 13%;
+    border-radius: 50%;
+    background: radial-gradient(circle at 38% 30%, #ffffff, #eef2f6 68%, #dbe2ea);
+    box-shadow:
+      inset 0 2px 4px rgba(255, 255, 255, 0.9),
+      inset 0 -3px 6px rgba(28, 27, 26, 0.12);
+  }
+
+  img {
+    position: relative;
+    z-index: 1;
+    width: 52%;
+    height: 52%;
+    object-fit: contain; // original brand colors
+  }
+}
+
+.orbit-icon:hover {
+  transform: scale(1.12);
+  box-shadow: var(--shadow-lg);
+}
+
+// Pause the whole system on hover for closer inspection.
+.tech-orbit:hover .orbit-ring,
+.tech-orbit:hover .orbit-icon {
+  animation-play-state: paused;
+}
+
+@keyframes orbit-spin {
   to {
     transform: rotate(360deg);
   }
 }
+@keyframes orbit-spin-rev {
+  to {
+    transform: rotate(-360deg);
+  }
+}
+@keyframes orbit-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  50% {
+    transform: scale(1.16);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .orbit-ring,
+  .orbit-icon,
+  .orbit-core::after {
+    animation: none;
+  }
+}
 
 @media (max-width: 900px) {
+  .skills-top {
+    grid-template-columns: 1fr;
+  }
+  .skills-head {
+    max-width: none;
+  }
   .skills-grid {
     grid-template-columns: 1fr;
   }
-  .orbit {
-    display: none;
+  .tech-orbit {
+    max-width: 300px;
   }
 }

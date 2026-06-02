@@ -49,13 +49,13 @@ export class Hero implements AfterViewInit, OnDestroy {
     const el = this.root().nativeElement;
     const words = el.querySelectorAll('.hero-title .reveal-word, .hero-title .word');
     if (this.device.reducedMotion()) {
-      gsap.set([words, '.hero-aside', '.hero-hint'], { opacity: 1, yPercent: 0, y: 0 });
+      gsap.set([words, '.hero-aside-text', '.hero-hint'], { opacity: 1, yPercent: 0, y: 0 });
       return;
     }
     const tl = gsap.timeline({ defaults: { ease: 'expo.out' } });
     tl.from(words, { yPercent: 120, opacity: 0, duration: 1.3, stagger: 0.09 })
       .from('.hero-eyebrow', { opacity: 0, y: 14, duration: 0.8 }, '-=1.0')
-      .from('.hero-aside', { opacity: 0, y: 20, duration: 0.9 }, '-=0.8')
+      .from('.hero-aside-text', { yPercent: 110, opacity: 0, duration: 1 }, '-=0.8')
       .from('.hero-hint', { opacity: 0, y: 10, duration: 0.8 }, '-=0.6');
   }
 

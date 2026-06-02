@@ -2,6 +2,7 @@ import { AfterViewInit, Component, ElementRef, inject, viewChild } from '@angula
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { RevealDirective } from '../../shared/directives/reveal.directive';
+import { ParallaxDirective } from '../../shared/directives/parallax.directive';
 import { DeviceService } from '../../core/services/device.service';
 import { EXPERIENCE } from '../../core/content';
 
@@ -12,7 +13,7 @@ import { EXPERIENCE } from '../../core/content';
 @Component({
   selector: 'aurora-experience',
   standalone: true,
-  imports: [RevealDirective],
+  imports: [RevealDirective, ParallaxDirective],
   templateUrl: './experience.html',
   styleUrl: './experience.scss',
 })
