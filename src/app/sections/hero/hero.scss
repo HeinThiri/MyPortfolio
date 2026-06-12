@@ -11,121 +11,187 @@
   overflow: hidden;
 }
 
-// Faint doodle texture only — keeps the Three.js scene visible behind the hero.
 .hero-bg {
   position: absolute;
   inset: 0;
   z-index: -1;
   background: url('/images/hero-doodles.svg') repeat;
   background-size: 280px 280px;
-  opacity: 0.22;
+  opacity: 0.16;
   pointer-events: none;
+}
+
+/* Soft floating blue bubbles (reference background) */
+.hero-bubbles {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+.hero-bubble {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 36% 30%,
+    rgba(143, 179, 224, 0.5),
+    rgba(143, 179, 224, 0.18) 70%,
+    transparent
+  );
+  animation: hero-bubble-float 9s var(--ease-in-out) infinite;
+}
+.hero-bubble--1 {
+  width: 120px;
+  height: 120px;
+  top: 8%;
+  left: 5%;
+}
+.hero-bubble--2 {
+  width: 58px;
+  height: 58px;
+  top: 16%;
+  left: 34%;
+  animation-delay: -2s;
+}
+.hero-bubble--3 {
+  width: 90px;
+  height: 90px;
+  top: 5%;
+  left: 42%;
+  opacity: 0.7;
+  animation-delay: -4s;
+}
+.hero-bubble--4 {
+  width: 40px;
+  height: 40px;
+  top: 32%;
+  left: 22%;
+  animation-delay: -1s;
+}
+.hero-bubble--5 {
+  width: 150px;
+  height: 150px;
+  bottom: 12%;
+  left: 30%;
+  opacity: 0.45;
+  animation-delay: -3s;
+}
+@keyframes hero-bubble-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-16px);
+  }
 }
 
 .hero-inner {
   position: relative;
   width: 100%;
 }
-
 .hero-layout {
   display: grid;
-  grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.75fr);
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
   gap: clamp(2rem, 5vw, 4.5rem);
   align-items: center;
 }
 
+/* ---- Left: content ------------------------------------------------- */
 .hero-content {
   display: flex;
   flex-direction: column;
-  gap: clamp(1rem, 2.5vh, 1.6rem);
-  max-width: 48rem;
+  gap: clamp(1rem, 2.4vh, 1.6rem);
+  max-width: 46rem;
   width: 100%;
 }
 
+/* Availability badge */
 .hero-greeting {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.55rem;
   margin: 0;
 }
-
-.hero-greeting-badge {
+.hero-avail {
   display: inline-flex;
   align-items: center;
+  gap: 0.55rem;
   padding: 0.42rem 0.9rem;
-  border-radius: 4px;
+  border-radius: var(--r-pill);
   font-size: var(--fs-small);
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: #fff;
-  background: #f4b400;
-  box-shadow: 0 8px 20px rgba(244, 180, 0, 0.28);
+  font-weight: 500;
+  color: var(--c-ink-soft);
+  background: var(--c-bg-elev);
+  border: 1px solid var(--c-line);
+  box-shadow: var(--shadow-sm);
+}
+.hero-avail-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #2fbf71;
+  box-shadow: 0 0 0 0 rgba(47, 191, 113, 0.5);
+  animation: hero-avail-pulse 2.4s var(--ease-in-out) infinite;
+}
+@keyframes hero-avail-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(47, 191, 113, 0.5);
+  }
+  70%,
+  100% {
+    box-shadow: 0 0 0 7px rgba(47, 191, 113, 0);
+  }
 }
 
+/* "Hi, I'm {Angular} Specialist" */
 .hero-name {
-  font-size: clamp(2.4rem, 5.8vw, 4.6rem);
-  line-height: 1.05;
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 6vw, 4.4rem);
+  line-height: 1.06;
   font-weight: 800;
-  letter-spacing: -0.03em;
-  color: #00b8c8; // fallback if background-clip is unsupported
-  text-transform: capitalize;
-  white-space: nowrap;
-
-  .reveal-line {
-    display: inline-flex;
-    flex-wrap: wrap;
-    gap: 0 0.28em;
-    padding-bottom: 0.04em;
-    max-width: 100%;
-  }
-
-  .word {
-    display: inline-block;
-    will-change: transform, filter, opacity;
-    white-space: nowrap;
-    // Teal → blue gradient — ties the name to the role text, planets and the
-    // cool rim light on the 3D figure while keeping strong contrast.
-    background: linear-gradient(120deg, #00b8c8 0%, #2f8fc4 45%, var(--c-accent-ink) 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    color: transparent;
-  }
+  letter-spacing: -0.02em;
+  color: var(--c-ink);
+  margin: 0;
+}
+.hero-hl {
+  background: linear-gradient(100deg, #5fa8e0 0%, #3f86d6 45%, var(--c-accent-ink) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+.hero-cursor {
+  -webkit-text-fill-color: var(--c-accent-ink);
+  color: var(--c-accent-ink);
+  font-weight: 400;
+  animation: typing-cursor 0.85s step-end infinite;
 }
 
+/* Role line (typing) */
 .hero-role {
   display: flex;
   align-items: stretch;
   gap: 0.9rem;
-  margin: 0.25rem 0 0;
+  margin: 0.2rem 0 0;
 }
-
 .hero-role-line {
   flex: none;
   width: 4px;
   border-radius: var(--r-pill);
   background: linear-gradient(180deg, var(--c-blue), var(--c-accent));
 }
-
-// Plain typing text for the role line — no banner background.
 .hero-typing-banner {
   display: inline-flex;
   flex-wrap: wrap;
   align-items: center;
   gap: 0.45rem;
-  min-height: 3rem;
-  padding: 0.65rem 0;
+  min-height: 2.6rem;
+  padding: 0.4rem 0;
 }
-
 .hero-typing-label {
   font-family: var(--font-display);
   font-size: clamp(1rem, 2vw, 1.35rem);
   font-weight: 500;
   color: var(--c-ink-muted);
 }
-
 .hero-typing-text {
   font-family: var(--font-display);
   font-size: clamp(1.1rem, 2.2vw, 1.65rem);
@@ -133,7 +199,6 @@
   color: var(--c-accent-ink);
   min-width: 1ch;
 }
-
 .hero-typing-cursor {
   font-family: var(--font-display);
   font-size: clamp(1.1rem, 2.2vw, 1.65rem);
@@ -141,7 +206,6 @@
   color: var(--c-accent-ink);
   animation: typing-cursor 0.85s step-end infinite;
 }
-
 @keyframes typing-cursor {
   0%,
   100% {
@@ -152,200 +216,403 @@
   }
 }
 
+/* Intro line */
+.hero-intro {
+  max-width: 44ch;
+  font-size: var(--fs-lead);
+  line-height: 1.6;
+  color: var(--c-ink-muted);
+}
+
+/* CTAs */
 .hero-actions {
   display: flex;
   flex-wrap: wrap;
   gap: 0.85rem;
-  margin-top: clamp(0.5rem, 2vh, 1.2rem);
+  margin-top: clamp(0.4rem, 1.6vh, 1rem);
 }
-
 .hero-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0.82rem 1.65rem;
+  gap: 0.5rem;
+  padding: 0.9rem 1.7rem;
   border-radius: var(--r-pill);
   font-size: var(--fs-body);
-  font-weight: 700;
+  font-weight: 600;
   color: #fff;
   text-decoration: none;
   border: none;
-  box-shadow: 0 10px 24px rgba(28, 27, 26, 0.14);
   transition:
     transform 0.35s var(--ease-out-soft),
     box-shadow 0.35s var(--ease-out-soft);
 
   &:hover {
     transform: translateY(-3px);
-    box-shadow: 0 16px 32px rgba(28, 27, 26, 0.18);
   }
 }
+.hero-btn svg {
+  width: 18px;
+  height: 18px;
+}
+.hero-btn-arrow {
+  transition: transform 0.3s var(--ease-out-soft);
+}
+.hero-btn--message:hover .hero-btn-arrow {
+  transform: translateX(4px);
+}
+.hero-btn--message {
+  background: var(--c-accent-ink);
+  box-shadow: 0 14px 30px -10px color-mix(in srgb, var(--c-accent-ink) 60%, transparent);
 
-// Secondary action — neutral "ghost" button so only the primary CTA carries colour.
+  &:hover {
+    box-shadow: 0 20px 38px -12px color-mix(in srgb, var(--c-accent-ink) 70%, transparent);
+  }
+}
 .hero-btn--cv {
   color: var(--c-ink);
   background: var(--c-surface);
   border: 1px solid var(--c-line);
-  box-shadow: 0 8px 20px rgba(28, 27, 26, 0.08);
+  box-shadow: var(--shadow-sm);
+
+  &:hover {
+    box-shadow: var(--shadow-md);
+  }
 }
 
-// Primary action — single solid accent blue.
-.hero-btn--message {
-  background: var(--c-accent-ink);
-  border: 1px solid var(--c-accent-ink);
+/* Stat meta row */
+.hero-meta {
+  list-style: none;
+  margin: clamp(0.6rem, 2vh, 1.4rem) 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(1.4rem, 4vw, 2.6rem);
+
+  li {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+  }
+  b {
+    font-family: var(--font-display);
+    font-size: clamp(1.2rem, 2vw, 1.6rem);
+    font-weight: 700;
+    color: var(--c-ink);
+    line-height: 1;
+  }
+  span {
+    font-size: var(--fs-micro);
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+    color: var(--c-ink-muted);
+  }
 }
 
+/* ---- Right: hanging employee card (dark showroom) ------------------ */
 .hero-visual {
   position: relative;
   justify-self: center;
-  width: min(100%, 460px);
+  width: min(100%, 440px);
 }
 
-// Light-themed isometric stage: soft gradient panel holding the figure,
-// a glowing platform, floating gradient planets and a dot network.
-.hero-scene {
+// Dark luxury "showroom" the card hangs in.
+.showroom {
   position: relative;
-  aspect-ratio: 1 / 1;
+  aspect-ratio: 3 / 4;
   width: 100%;
-  background: transparent;
+  border-radius: clamp(20px, 3vw, 30px);
+  perspective: 1600px;
+  perspective-origin: 50% 28%;
+ 
+}
+.showroom-spotlight {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: conic-gradient(
+    from 90deg at 50% -8%,
+    transparent 40%,
+    rgba(180, 160, 255, 0.16) 50%,
+    transparent 60%
+  );
+}
+.showroom-glow {
+  position: absolute;
+  left: 50%;
+  top: 46%;
+  translate: -50% -50%;
+  width: 70%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(143, 179, 224, 0.45), transparent 65%);
+  filter: blur(26px);
+  pointer-events: none;
+}
+.showroom-particles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: radial-gradient(rgba(91, 123, 176, 0.4) 0.9px, transparent 1.2px);
+  background-size: 30px 30px;
+  -webkit-mask-image: radial-gradient(circle at 50% 40%, #000 5%, transparent 70%);
+  mask-image: radial-gradient(circle at 50% 40%, #000 5%, transparent 70%);
+  opacity: 0.16;
 }
 
-// Drifting connected-dot constellation.
-.hero-network {
+// Metal mount the rope hangs from.
+.lanyard-mount {
+  position: absolute;
+  top: 4.5%;
+  left: 50%;
+  translate: -50% -50%;
+  width: 46px;
+  height: 12px;
+  border-radius: 6px;
+  background: linear-gradient(180deg, #d4d8e2, #888e9c 60%, #5c606b);
+  box-shadow:
+    0 3px 7px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  z-index: 3;
+}
+
+// Flexible rope — path 'd' is driven by the Verlet physics each frame.
+.lanyard-rope {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
-  opacity: 0.55;
-
-  .hero-network-lines line {
-    stroke: var(--c-accent);
-    stroke-width: 1;
-    opacity: 0.4;
-  }
-
-  .hero-network-dots circle {
-    fill: var(--c-accent-ink);
-    animation: hero-twinkle 3.6s var(--ease-in-out) infinite;
-  }
-
-  // Stagger the twinkle so dots pulse out of sync.
-  .hero-network-dots circle:nth-child(2n) { animation-delay: 0.9s; }
-  .hero-network-dots circle:nth-child(3n) { animation-delay: 1.8s; }
-}
-
-@keyframes hero-twinkle {
-  0%, 100% { opacity: 0.35; }
-  50%      { opacity: 1; }
-}
-
-// Floating gradient spheres — light-palette take on the reference planets.
-.hero-planet {
-  position: absolute;
-  border-radius: 50%;
-  will-change: transform;
-
-  &::after {
-    content: '';
-    position: absolute;
-    inset: 18% 50% 50% 18%;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.55);
-    filter: blur(4px);
-  }
-}
-
-.hero-planet--lg {
-  width: 26%;
-  aspect-ratio: 1;
-  top: 6%;
-  right: 4%;
-  background: radial-gradient(circle at 32% 28%, var(--c-cyan), var(--c-accent) 58%, var(--c-accent-ink));
-  box-shadow: 0 18px 36px rgba(91, 123, 176, 0.32);
-  animation: hero-float-a 7s var(--ease-in-out) infinite;
-}
-
-.hero-planet--md {
-  width: 16%;
-  aspect-ratio: 1;
-  bottom: 14%;
-  right: 10%;
-  background: radial-gradient(circle at 34% 30%, #f6e6c4, var(--c-champagne) 55%, #d9c39a);
-  box-shadow: 0 14px 28px rgba(217, 195, 154, 0.4);
-  animation: hero-float-b 9s var(--ease-in-out) infinite;
-}
-
-.hero-planet--sm {
-  width: 11%;
-  aspect-ratio: 1;
-  top: 22%;
-  left: 8%;
-  background: radial-gradient(circle at 34% 30%, var(--c-cyan), var(--c-blue) 60%, var(--c-accent));
-  box-shadow: 0 10px 20px rgba(143, 179, 224, 0.4);
-  animation: hero-float-a 8s var(--ease-in-out) infinite 1.2s;
-}
-
-@keyframes hero-float-a {
-  0%, 100% { transform: translateY(0); }
-  50%      { transform: translateY(-14px); }
-}
-
-@keyframes hero-float-b {
-  0%, 100% { transform: translateY(0); }
-  50%      { transform: translateY(12px); }
-}
-
-// Glowing platform ring under the figure's feet.
-.hero-platform {
-  position: absolute;
-  left: 50%;
-  bottom: 9%;
-  width: 62%;
-  height: 16%;
-  translate: -50% 0;
-  border-radius: 50%;
-  background: radial-gradient(closest-side, var(--glow-cool), transparent 72%);
-
-  &::before {
-    content: '';
-    position: absolute;
-    inset: 32% 8%;
-    border-radius: 50%;
-    border: 1.5px solid var(--c-accent);
-    opacity: 0.5;
-    animation: hero-pulse 3.4s var(--ease-in-out) infinite;
-  }
-}
-
-@keyframes hero-pulse {
-  0%, 100% { transform: scale(0.92); opacity: 0.55; }
-  50%      { transform: scale(1.06); opacity: 0.2; }
-}
-
-.hero-figure {
-  position: absolute;
-  left: 50%;
-  bottom: 8%;
-  width: 96%;
-  // Square-ish stage for the 3D figure; idle float is driven in WebGL.
-  aspect-ratio: 4 / 5;
-  height: auto;
-  translate: -50% 0;
+  overflow: visible;
+  pointer-events: none;
   z-index: 2;
-  // Shadow follows the rendered silhouette (transparent canvas alpha).
-  filter: drop-shadow(0 26px 38px rgba(28, 27, 26, 0.24));
+}
+.lanyard-band {
+  fill: none;
+  stroke: url(#ropeGrad);
+  stroke-width: 9;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  filter: drop-shadow(0 6px 8px rgba(5, 4, 20, 0.5));
 }
 
-.hero-btn--hire {
+// Metal clip at the top of the card.
+.badge-clip {
   position: absolute;
-  right: 4%;
-  bottom: 8%;
-  z-index: 2;
-  background: var(--c-accent);
-  border: 1px solid var(--c-accent-ink);
-  padding-inline: 1.85rem;
+  top: -9px;
+  left: 50%;
+  translate: -50% 0;
+  width: 30px;
+  height: 16px;
+  border-radius: 5px;
+  background: linear-gradient(180deg, #d4d8e2, #7d828f);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+  z-index: 4;
 }
 
+// The ID card — absolutely positioned; its transform is driven by the rope tip.
+.badge-card {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 64%;
+  z-index: 5;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.5rem;
+  padding: clamp(1rem, 2.4vw, 1.5rem) clamp(0.9rem, 2vw, 1.3rem) clamp(1rem, 2vw, 1.3rem);
+  border-radius: 18px;
+  color: var(--c-ink);
+  // Frosted light glass.
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.42));
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(20px) saturate(165%);
+  -webkit-backdrop-filter: blur(20px) saturate(165%);
+  box-shadow:
+    var(--shadow-lg),
+    inset 0 1px 0 rgba(255, 255, 255, 0.85);
+  transition: box-shadow 0.35s var(--ease-out-soft);
+
+  &:active {
+    cursor: grabbing;
+  }
+  &:hover {
+    box-shadow:
+      var(--shadow-lg),
+      0 0 36px -4px var(--glow-cool),
+      inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  }
+
+  // Held — lifts and brightens (box-shadow/filter only, never transform).
+  &.is-grabbed {
+    filter: brightness(1.05) saturate(1.06);
+    box-shadow:
+      var(--shadow-lg),
+      0 0 48px -2px var(--glow-cool),
+      inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  }
+  // Just dropped — a quick glow + light pulse as it swings free.
+  &.is-dropped {
+    animation: card-drop 0.65s var(--ease-out-soft);
+  }
+}
+@keyframes card-drop {
+  0% {
+    filter: brightness(1.1) saturate(1.1);
+    box-shadow:
+      var(--shadow-lg),
+      0 0 60px 4px var(--glow-cool),
+      inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  }
+  100% {
+    filter: brightness(1);
+    box-shadow:
+      var(--shadow-lg),
+      inset 0 1px 0 rgba(255, 255, 255, 0.85);
+  }
+}
+.badge-hole {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  translate: -50% 0;
+  width: 34px;
+  height: 8px;
+  border-radius: var(--r-pill);
+  background: rgba(28, 27, 26, 0.16);
+  box-shadow: inset 0 1px 2px rgba(28, 27, 26, 0.3);
+}
+.badge-sheen {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.22), transparent 38%);
+  pointer-events: none;
+}
+
+.badge-head {
+  width: 100%;
+  margin-top: 0.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.badge-org {
+  color: var(--c-accent-ink);
+  font-weight: 700;
+}
+.badge-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  color: var(--c-ink-muted);
+}
+.badge-status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #34d399;
+  box-shadow: 0 0 6px #34d399;
+}
+.badge-photo {
+  width: clamp(74px, 16vw, 104px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-top: 0.2rem;
+  border: 3px solid #ffffff;
+  box-shadow: 0 10px 22px -8px rgba(28, 27, 26, 0.3);
+  background: var(--c-bg-elev);
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 22%;
+  }
+}
+.badge-name {
+  margin-top: 0.4rem;
+  font-family: var(--font-display);
+  font-size: clamp(1.05rem, 2.4vw, 1.45rem);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--c-ink);
+}
+.badge-role {
+  font-size: var(--fs-small);
+  font-weight: 600;
+  color: var(--c-accent-ink);
+}
+.badge-dept {
+  font-size: var(--fs-micro);
+  color: var(--c-ink-muted);
+}
+.badge-contact {
+  list-style: none;
+  margin: 0.6rem 0 0;
+  padding: 0.7rem 0 0;
+  width: 100%;
+  border-top: 1px solid var(--c-line);
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+
+  li {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.45rem;
+    font-size: var(--fs-micro);
+    color: var(--c-ink-soft);
+  }
+  svg {
+    width: 13px;
+    height: 13px;
+    color: var(--c-accent-ink);
+  }
+}
+.badge-foot {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.6rem;
+
+  a {
+    display: grid;
+    place-items: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    color: var(--c-ink-soft);
+    background: rgba(255, 255, 255, 0.6);
+    border: 1px solid var(--c-line);
+    transition:
+      transform 0.3s var(--ease-out-soft),
+      color 0.3s var(--ease-out-soft),
+      background 0.3s var(--ease-out-soft);
+    svg {
+      width: 15px;
+      height: 15px;
+    }
+    &:hover {
+      transform: translateY(-2px);
+      color: #fff;
+      background: linear-gradient(135deg, var(--c-blue), var(--c-accent-ink));
+      border-color: transparent;
+    }
+  }
+}
+
+
+/* ---- Scroll hint --------------------------------------------------- */
 .hero-hint {
   position: absolute;
   right: var(--gutter);
@@ -355,11 +622,9 @@
   align-items: center;
   gap: 0.7rem;
 }
-
 .hero-hint-label {
   @include eyebrow;
 }
-
 .hero-hint-track {
   width: 24px;
   height: 38px;
@@ -369,7 +634,6 @@
   justify-content: center;
   padding-top: 6px;
 }
-
 .hero-hint-dot {
   width: 4px;
   height: 8px;
@@ -377,7 +641,6 @@
   background: #00b8c8;
   animation: hint-scroll 1.8s var(--ease-in-out) infinite;
 }
-
 @keyframes hint-scroll {
   0% {
     transform: translateY(0);
@@ -395,39 +658,33 @@
   }
 }
 
+/* ---- Responsive ---------------------------------------------------- */
 @media (max-width: 960px) {
-  .hero-name {
-    white-space: normal;
-    font-size: clamp(2.2rem, 9vw, 3.4rem);
-
-    .word {
-      white-space: normal;
-    }
-  }
   .hero-layout {
     grid-template-columns: 1fr;
     gap: clamp(2rem, 6vh, 3rem);
   }
-
   .hero-content {
     max-width: none;
     text-align: center;
     align-items: center;
   }
-
-  .hero-greeting {
+  .hero-name {
+    white-space: normal;
+    .word {
+      white-space: normal;
+    }
+  }
+  .hero-role,
+  .hero-actions,
+  .hero-meta {
     justify-content: center;
   }
-
-  .hero-role {
-    justify-content: center;
+  .hero-intro {
+    margin-inline: auto;
   }
-
-  .hero-actions {
-    justify-content: center;
-  }
-
   .hero-visual {
+    grid-row: 1;
     width: min(100%, 380px);
   }
 }
@@ -438,14 +695,18 @@
     width: 100%;
     max-width: 18rem;
   }
-
   .hero-btn {
     width: 100%;
   }
-
   .hero-hint {
     left: 50%;
     right: auto;
     translate: -50% 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-avail-dot {
+    animation: none;
   }
 }

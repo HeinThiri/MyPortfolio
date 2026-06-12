@@ -1,79 +1,111 @@
 <section #root id="hero" class="hero" aria-label="Introduction">
   <div class="hero-bg" aria-hidden="true"></div>
+  <div class="hero-bubbles" aria-hidden="true">
+    <span class="hero-bubble hero-bubble--1"></span>
+    <span class="hero-bubble hero-bubble--2"></span>
+    <span class="hero-bubble hero-bubble--3"></span>
+    <span class="hero-bubble hero-bubble--4"></span>
+    <span class="hero-bubble hero-bubble--5"></span>
+  </div>
 
   <div class="hero-inner container">
     <div class="hero-layout">
       <div class="hero-content">
-        <!-- <p class="hero-greeting">
-          <span class="hero-greeting-badge">Hello!</span>
-        </p> -->
-
         <h1 class="hero-name">
-          <span class="reveal-line">
-            <span class="word">Hein</span>
-            <span class="word">Thiri</span>
-            <span class="word">Htun</span>
+          Hi, I’m
+          <span class="hero-hl" aria-live="polite">
+            {{ typingText() }} Specialist<span class="hero-cursor" aria-hidden="true">|</span>
           </span>
         </h1>
 
-        <p class="hero-role">
-          <span class="hero-role-line" aria-hidden="true"></span>
-          <span class="hero-typing-banner" aria-live="polite">
-            <span class="hero-typing-label">I'm a</span>
-            <span class="hero-typing-text">{{ typingText() }}</span>
-            <span class="hero-typing-cursor" aria-hidden="true">|</span>
-          </span>
+        <p class="hero-intro">
+          I build fast, refined web applications with Angular — turning ideas and
+          designs into polished, high-performing digital products that businesses
+          and users love.
         </p>
 
         <div class="hero-actions">
-          <a class="hero-btn hero-btn--cv" href="/cv.pdf" download data-cursor="hover">
-            Download CV
+          <a class="hero-btn hero-btn--message" href="/cv.pdf" download data-cursor="hover">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3v5h5"/><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M9 13h6M9 17h6"/></svg>
+            Resume
           </a>
-          <a class="hero-btn hero-btn--message" href="#contact" data-cursor="hover">
-            Send Message
-          </a>
+          <a class="hero-btn hero-btn--cv" href="#contact" data-cursor="hover">Contact Me</a>
         </div>
       </div>
 
+      <!-- Draggable lanyard ID card on a flexible (Verlet-physics) rope -->
       <div class="hero-visual">
-        <div class="hero-scene" aria-hidden="true">
-          <!-- Connected-dot network drifting behind the figure -->
-          <svg class="hero-network" viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice">
-            <g class="hero-network-lines">
-              <line x1="58" y1="92" x2="150" y2="60" />
-              <line x1="150" y1="60" x2="300" y2="110" />
-              <line x1="300" y1="110" x2="344" y2="220" />
-              <line x1="344" y1="220" x2="280" y2="320" />
-              <line x1="58" y1="92" x2="70" y2="240" />
-              <line x1="70" y1="240" x2="150" y2="340" />
-            </g>
-            <g class="hero-network-dots">
-              <circle cx="58" cy="92" r="4" />
-              <circle cx="150" cy="60" r="5" />
-              <circle cx="300" cy="110" r="4" />
-              <circle cx="344" cy="220" r="6" />
-              <circle cx="280" cy="320" r="4" />
-              <circle cx="70" cy="240" r="5" />
-              <circle cx="150" cy="340" r="4" />
-            </g>
+        <div #showroom class="showroom">
+          <span class="showroom-spotlight" aria-hidden="true"></span>
+          <span class="showroom-glow" aria-hidden="true"></span>
+          <span class="showroom-particles" aria-hidden="true"></span>
+
+          <!-- mount the rope hangs from -->
+          <span class="lanyard-mount" aria-hidden="true"></span>
+
+          <!-- flexible rope drawn from the physics points -->
+          <svg class="lanyard-rope" aria-hidden="true">
+            <defs>
+              <linearGradient id="ropeGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#8fb3e0" />
+                <stop offset="1" stop-color="#5b7bb0" />
+              </linearGradient>
+            </defs>
+            <path #ropePath class="lanyard-band" />
           </svg>
 
-          <!-- Floating gradient planets -->
-          <span class="hero-planet hero-planet--lg"></span>
-          <span class="hero-planet hero-planet--md"></span>
-          <span class="hero-planet hero-planet--sm"></span>
+          <article
+            #card
+            class="badge-card"
+            [class.is-grabbed]="cardFx() === 'grab'"
+            [class.is-dropped]="cardFx() === 'drop'"
+            (pointerdown)="onGrab($event)"
+            (pointermove)="onDrag($event)"
+            (pointerup)="onRelease($event)"
+            (pointercancel)="onRelease($event)"
+            data-cursor="hover"
+          >
+            <span class="badge-hole" aria-hidden="true"></span>
+            <span class="badge-clip" aria-hidden="true"></span>
+            <span class="badge-sheen" aria-hidden="true"></span>
 
-          <!-- Glowing platform ring beneath the figure -->
-          <span class="hero-platform"></span>
+            <header class="badge-head">
+              <span class="badge-org">CODE • STUDIO</span>
+              <span class="badge-status"><span class="badge-status-dot"></span>Available</span>
+            </header>
 
-          <!-- Real person as a 3D model (GLB) rendered over the platform. -->
-          <canvas
-            #figure
-            class="hero-figure"
-            aria-label="Hein Thiri Htun — Frontend Developer"
-          ></canvas>
+            <div class="badge-photo">
+              <img src="/images/image-about.png" alt="Hein Thiri Htun" loading="lazy" draggable="false" />
+            </div>
+
+            <h3 class="badge-name">Hein Thiri Htun</h3>
+            <p class="badge-role">Frontend Developer</p>
+            <p class="badge-dept">Web Engineering Department</p>
+
+            <ul class="badge-contact">
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+                heinthiri2000&#64;gmail.com
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h3l2 5-2.5 1.5a12 12 0 0 0 5 5L14 13l5 2v3a2 2 0 0 1-2.2 2A16 16 0 0 1 3 6.2 2 2 0 0 1 5 4Z"/></svg>
+                09-774694461
+              </li>
+            </ul>
+
+            <footer class="badge-foot">
+              <a href="#" aria-label="GitHub" data-cursor="hover">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.53 2.36 1.09 2.94.83.09-.65.35-1.1.63-1.35-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.5 9.5 0 0 1 5 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.69-4.57 4.94.36.31.68.92.68 1.85v2.74c0 .27.18.58.69.48A10 10 0 0 0 12 2Z"/></svg>
+              </a>
+              <a href="https://heinthiritun.vercel.app" aria-label="Portfolio" data-cursor="hover">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c2.5 2.6 3.8 5.7 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3z"/></svg>
+              </a>
+              <a href="mailto:heinthiri2000@gmail.com" aria-label="Email" data-cursor="hover">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+              </a>
+            </footer>
+          </article>
         </div>
-        <a class="hero-btn hero-btn--hire" href="#contact" data-cursor="hover">Hire Me</a>
       </div>
     </div>
   </div>
