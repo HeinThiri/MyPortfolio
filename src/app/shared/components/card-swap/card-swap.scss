@@ -29,18 +29,33 @@
   transform-style: preserve-3d;
   backface-visibility: hidden;
 
-  // Frosted glass tinted with a project accent (per-card, see below).
+  // Mostly-white frosted glass with a soft accent glow in the top corner —
+  // keeps the description text crisp and professional.
   --card-accent: var(--c-accent);
   background:
-    linear-gradient(150deg, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.15)),
-    linear-gradient(150deg, var(--card-accent), transparent 62%);
+    linear-gradient(155deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.62)),
+    radial-gradient(130% 100% at 100% 0%, var(--card-accent), transparent 52%);
   backdrop-filter: blur(18px) saturate(160%);
   -webkit-backdrop-filter: blur(18px) saturate(160%);
   border: 1px solid rgba(255, 255, 255, 0.6);
   box-shadow:
     var(--shadow-lg),
     inset 0 1px 0 rgba(255, 255, 255, 0.7);
-  transition: box-shadow 0.35s var(--ease-out-soft);
+  transition:
+    box-shadow 0.35s var(--ease-out-soft),
+    border-color 0.35s var(--ease-out-soft),
+    filter 0.35s var(--ease-out-soft);
+}
+
+// Hover (front card) — lift it with an accent ring + glow + slight brighten.
+// Uses filter/shadow only, never transform (GSAP owns the card transform).
+.card-swap .card:hover {
+  filter: brightness(1.04) saturate(1.06);
+  border-color: rgba(255, 255, 255, 0.9);
+  box-shadow:
+    var(--shadow-lg),
+    var(--shadow-glow),
+    0 0 0 1.5px color-mix(in srgb, var(--card-accent) 55%, transparent);
 }
 
 // Stagger the stack through the site's accent palette.
@@ -54,11 +69,14 @@
   --card-accent: var(--c-champagne);
 }
 
+// Click toggles .selected — a pinned look with a bold accent inner ring.
 .card-swap .card.selected {
+  filter: saturate(1.08);
+  border-color: transparent;
   box-shadow:
     var(--shadow-lg),
     var(--shadow-glow),
-    inset 0 0 0 1px var(--c-accent);
+    inset 0 0 0 2px color-mix(in srgb, var(--card-accent) 80%, white);
 }
 
 .card-swap .card-kicker {
@@ -80,4 +98,137 @@
   margin-top: auto;
   color: var(--c-ink-muted);
   font-size: var(--fs-body);
+}
+
+/* ---- Personal-information card variant ------------------------------ */
+.card-swap .info-card {
+  justify-content: center;
+  gap: 0.7rem;
+}
+
+.card-swap .info-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  color: var(--c-accent-ink);
+  background: rgba(255, 255, 255, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
+
+  svg {
+    width: 26px;
+    height: 26px;
+  }
+}
+
+.card-swap .info-value {
+  font-size: var(--fs-h3);
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--c-ink);
+  word-break: break-word;
+}
+
+/* ---- Category card: icon + title header, then divided list ---------- */
+.card-swap .cat-card {
+  gap: 1rem;
+  justify-content: flex-start;
+}
+
+.card-swap .cat-head {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.card-swap .cat-icon {
+  width: 54px;
+  height: 54px;
+  border-radius: 15px;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  // Solid accent badge — a more corporate, premium look.
+  background: linear-gradient(
+    140deg,
+    color-mix(in srgb, var(--card-accent) 80%, #ffffff),
+    color-mix(in srgb, var(--card-accent) 68%, #38465c)
+  );
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow:
+    0 10px 22px -10px rgba(28, 27, 26, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+
+  svg {
+    width: 26px;
+    height: 26px;
+    stroke-width: 2;
+  }
+}
+
+.card-swap .cat-title {
+  font-size: var(--fs-h3);
+  font-weight: 600;
+  line-height: 1.1;
+}
+
+.card-swap .cat-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+// Key–value rows (Personal Information), divided by hairlines.
+.card-swap .cat-list li {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.6rem 0;
+  border-top: 1px solid var(--c-line);
+  font-size: var(--fs-body);
+  line-height: 1.4;
+
+  &:first-child {
+    border-top: none;
+  }
+}
+
+.card-swap .cat-key {
+  flex: none;
+  color: var(--c-ink-muted);
+}
+
+.card-swap .cat-val {
+  text-align: right;
+  font-weight: 600;
+  color: var(--c-ink);
+  word-break: break-word;
+}
+
+// Bullet variant (Achievements, Skills).
+.card-swap .cat-list--bullet li {
+  display: block;
+  position: relative;
+  padding: 0.55rem 0 0.55rem 1.1rem;
+  text-align: left;
+  font-weight: 500;
+  color: var(--c-ink-soft);
+  word-break: break-word;
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 1.05em;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--card-accent, var(--c-accent));
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--card-accent) 25%, transparent);
+  }
 }

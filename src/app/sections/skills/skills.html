@@ -1,54 +1,80 @@
 <section id="skills" class="skills" aria-label="Skills and tech stack">
+  <!-- Glowing energy orb floating in the centre of the section. -->
+  <span class="skills-orb" aria-hidden="true"></span>
+
   <div class="container skills-inner">
     <div class="skills-top">
       <header class="skills-head">
         <p class="eyebrow" auroraReveal>(02) — Capabilities</p>
-        <h2 auroraReveal="text">Personal Achievement & Skills</h2>
-        <ul class="achievements" aria-label="Personal achievements">
-          @for (a of achievements; track a) {
-            <li class="achievement" auroraReveal>{{ a }}</li>
+        <h2 class="skills-title" auroraReveal="text">
+          Skills &amp; <span class="serif italic">Expertise</span>
+        </h2>
+        <p class="skills-lead" auroraReveal>
+          I help businesses launch fast, polished web experiences — from
+          interface design and frontend builds to CMS and backend integration.
+        </p>
+
+        <!-- Services: what I deliver (the tools themselves orbit on the right). -->
+        <ul class="services" aria-label="Services">
+          @for (s of services; track s.name) {
+            <li class="service" auroraReveal>
+              <span class="service-mark" aria-hidden="true"></span>
+              <span class="service-body">
+                <span class="service-name">{{ s.name }}</span>
+                <span class="service-note">{{ s.note }}</span>
+              </span>
+            </li>
           }
         </ul>
+
+        <!-- Headline stats for quick business credibility. -->
+        <!-- <ul class="stats" aria-label="Highlights">
+          @for (st of stats; track st.label) {
+            <li class="stat" auroraReveal>
+              <span class="stat-value">{{ st.value }}</span>
+              <span class="stat-label">{{ st.label }}</span>
+            </li>
+          }
+        </ul> -->
       </header>
 
-      <!-- Rotating tech-stack orbit (right of the heading) -->
+      <!-- Tech-stack keyboard (3D perspective deck, right of the heading) -->
       <div
-        class="tech-orbit"
-        role="img"
-        aria-label="Tech stack: Angular, Figma, GitHub, JavaScript, Wix, WordPress"
+        class="kb-stage"
+        role="list"
+        aria-label="Tech stack: Angular, TypeScript, JavaScript, HTML5, CSS3, SCSS, WordPress, Wix, GitHub, Figma, REST API, Bootstrap"
       >
-        <span class="orbit-frame" aria-hidden="true"></span>
-        <div class="orbit-core">
-          <span class="orbit-gem" aria-hidden="true"></span>
-          <span class="serif italic">stack</span>
-        </div>
-        <div class="orbit-ring">
-          @for (t of stack; track t.name; let i = $index) {
-            <div class="orbit-item" [style.--a]="(i * 360) / stack.length + 'deg'">
-              <div class="orbit-icon-wrap">
-                <div class="orbit-icon"><img [src]="t.icon" [alt]="t.name" /></div>
-              </div>
+        <!-- Frosted-glass deck base (tilted to match the keyboard) -->
+        <span class="kb-base" aria-hidden="true"></span>
+        <div class="keyboard">
+          @for (k of keys; track k.name; let i = $index) {
+            <div
+              class="key-wrap"
+              [class.key-wrap--lg]="k.large"
+              [style.--i]="i"
+              role="listitem"
+            >
+              <a
+                class="key"
+                [class.key--light]="k.tone === 'light'"
+                [style.--c]="k.color"
+                [href]="k.link"
+                target="_blank"
+                rel="noopener noreferrer"
+                [attr.aria-label]="k.name + ' — open official site'"
+                data-cursor="hover"
+              >
+                <span class="key__side" aria-hidden="true"></span>
+                <span class="key__front" aria-hidden="true"></span>
+                <span class="key__top">
+                  <img class="key-logo" [src]="k.icon" [alt]="k.name" />
+                  <span class="key-name">{{ k.name }}</span>
+                </span>
+              </a>
             </div>
           }
         </div>
       </div>
-    </div>
-
-    <!-- Personal achievements -->
-  
-
-    <div class="skills-grid">
-      @for (g of groups; track g.title) {
-        <article class="skill-card glass" auroraReveal data-cursor="hover">
-          <h3 class="skill-card-title">{{ g.title }}</h3>
-          <p class="skill-card-blurb">{{ g.blurb }}</p>
-          <ul class="skill-list">
-            @for (item of g.items; track item) {
-              <li class="skill-chip">{{ item }}</li>
-            }
-          </ul>
-        </article>
-      }
     </div>
   </div>
 </section>

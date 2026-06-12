@@ -64,6 +64,12 @@ export class ScrollService {
     this.lenis?.scrollTo(target, { offset, duration: 1.4 });
   }
 
+  /** Jump to the top instantly (used on route changes). */
+  jumpToTop(): void {
+    if (this.lenis) this.lenis.scrollTo(0, { immediate: true });
+    else window.scrollTo(0, 0);
+  }
+
   stop(): void {
     this.lenis?.stop();
   }

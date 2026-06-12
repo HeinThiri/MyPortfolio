@@ -1,0 +1,22 @@
+<a class="pcard" [routerLink]="['/work', project().slug]" data-cursor="hover">
+  <div class="pcard-media">
+    <img class="pcard-img" [src]="project().image" [alt]="project().title" loading="lazy" />
+    <span class="pcard-cat">{{ project().category }}</span>
+  </div>
+  <div class="pcard-body">
+    <h3 class="pcard-title">{{ project().title }}</h3>
+    <p class="pcard-desc">{{ project().description }}</p>
+    <ul class="pcard-stack">
+      @for (t of project().stack.slice(0, 3); track t) {
+        <li>{{ t }}</li>
+      }
+      @if (project().stack.length > 3) {
+        <li class="pcard-more">+{{ project().stack.length - 3 }}</li>
+      }
+    </ul>
+    <span class="pcard-cta">
+      View Details
+      <span class="pcard-arrow" aria-hidden="true">→</span>
+    </span>
+  </div>
+</a>

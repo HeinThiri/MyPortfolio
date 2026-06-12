@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 360" width="280" height="360" role="img" aria-label="Person illustration sample">
+  <defs>
+    <linearGradient id="suit" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#8f7be0"/>
+      <stop offset="0.55" stop-color="#7e9cc9"/>
+      <stop offset="1" stop-color="#5b7bb0"/>
+    </linearGradient>
+    <linearGradient id="suitDark" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#6a5bb5"/>
+      <stop offset="1" stop-color="#46618f"/>
+    </linearGradient>
+    <linearGradient id="skin" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f3d9c2"/>
+      <stop offset="1" stop-color="#e3bfa1"/>
+    </linearGradient>
+    <radialGradient id="shadow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#5b7bb0" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#5b7bb0" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- ground shadow -->
+  <ellipse cx="140" cy="338" rx="92" ry="20" fill="url(#shadow)"/>
+
+  <!-- legs -->
+  <path d="M118 232 q-6 56 -10 88 q-1 10 12 10 q10 0 11 -10 l8 -74 z" fill="url(#suitDark)"/>
+  <path d="M150 232 l8 74 q1 10 11 10 q13 0 12 -10 q-4 -32 -10 -88 z" fill="url(#suit)"/>
+  <!-- shoes -->
+  <path d="M108 326 q-2 12 10 14 l18 0 q4 -1 4 -6 l0 -8 z" fill="#3a3733"/>
+  <path d="M152 326 l0 8 q0 5 4 6 l18 0 q12 -2 10 -14 z" fill="#46414b"/>
+
+  <!-- torso / suit jacket -->
+  <path d="M104 150 q36 -16 72 0 q10 50 6 92 q-42 16 -84 0 q-4 -42 6 -92 z" fill="url(#suit)"/>
+  <!-- jacket lapel / shirt -->
+  <path d="M140 152 l-16 14 l16 60 l16 -60 z" fill="#fbfaf7"/>
+  <path d="M140 152 l-3 8 l3 60 l3 -60 z" fill="#7e9cc9"/>
+
+  <!-- arms raised toward face (looking-out pose) -->
+  <path d="M108 158 q-26 8 -34 38 q-3 12 8 16 q10 3 14 -8 q8 -22 24 -30 z" fill="url(#suitDark)"/>
+  <path d="M172 158 q26 8 34 38 q3 12 -8 16 q-10 3 -14 -8 q-8 -22 -24 -30 z" fill="url(#suit)"/>
+  <!-- hands near face -->
+  <circle cx="120" cy="120" r="11" fill="url(#skin)"/>
+  <circle cx="160" cy="120" r="11" fill="url(#skin)"/>
+
+  <!-- neck -->
+  <rect x="132" y="118" width="16" height="22" rx="6" fill="url(#skin)"/>
+
+  <!-- head -->
+  <circle cx="140" cy="100" r="26" fill="url(#skin)"/>
+  <!-- hair -->
+  <path d="M114 96 q2 -34 26 -34 q24 0 26 34 q-8 -14 -26 -14 q-18 0 -26 14 z" fill="#3a3733"/>
+  <!-- binocular hint between hands -->
+  <rect x="126" y="94" width="28" height="14" rx="6" fill="#46414b"/>
+</svg>

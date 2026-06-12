@@ -4,80 +4,351 @@
   position: relative;
   z-index: var(--z-content);
   @include section-pad;
-}
-
-.experience-head {
-  margin-bottom: clamp(3rem, 8vh, 5rem);
-  h2 {
-    font-size: var(--fs-h2);
-    margin-top: 1rem;
-  }
-}
-
-.timeline {
-  position: relative;
-  list-style: none;
-  padding-left: clamp(1.5rem, 5vw, 4rem);
-}
-
-.timeline-track {
-  position: absolute;
-  left: 0;
-  top: 0.5rem;
-  bottom: 0.5rem;
-  width: 2px;
-  background: var(--c-line);
-  border-radius: var(--r-pill);
   overflow: hidden;
 }
-.timeline-progress {
-  position: absolute;
-  inset: 0;
-  transform-origin: top;
-  background: var(--grad-accent);
-}
 
-.milestone {
-  position: relative;
-  display: grid;
-  grid-template-columns: 9rem 1fr;
-  gap: clamp(1rem, 3vw, 3rem);
-  padding-block: clamp(1.6rem, 4vh, 3rem);
-  border-bottom: 1px solid var(--c-line);
-  &:last-child {
-    border-bottom: none;
+/* ---- Header --------------------------------------------------------- */
+.experience-head {
+  text-align: center;
+  max-width: 720px;
+  margin-inline: auto;
+
+  h2 {
+    font-size: var(--fs-h2);
+    line-height: var(--lh-snug);
+    margin-top: 0.8rem;
   }
 }
-.milestone-node {
-  position: absolute;
-  left: calc(clamp(1.5rem, 5vw, 4rem) * -1);
-  top: clamp(1.9rem, 4vh, 3.3rem);
-  translate: -50% 0;
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: var(--c-bg);
-  border: 2px solid var(--c-accent);
-  box-shadow: 0 0 0 4px var(--c-bg), 0 0 18px var(--glow-cool);
-}
-.milestone-period {
-  @include eyebrow;
-  padding-top: 0.4rem;
-}
-.milestone-role {
-  font-size: var(--fs-h3);
-}
-.milestone-company {
-  color: var(--c-accent-ink);
-  margin-bottom: 0.6rem;
-}
-.milestone-summary {
-  color: var(--c-ink-soft);
+.experience-lead {
+  margin-top: clamp(0.9rem, 2vh, 1.4rem);
+  color: var(--c-ink-muted);
+  font-size: var(--fs-lead);
+  line-height: var(--lh-body);
 }
 
-@media (max-width: 700px) {
-  .milestone {
-    grid-template-columns: 1fr;
-    gap: 0.5rem;
+.jx-stats {
+  list-style: none;
+  margin: clamp(1.6rem, 4vh, 2.6rem) 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: clamp(1.4rem, 4vw, 3rem);
+}
+.jx-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+.jx-stat-value {
+  font-family: var(--font-display);
+  font-size: clamp(1.7rem, 3vw, 2.4rem);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  @include gradient-text;
+}
+.jx-stat-label {
+  font-size: var(--fs-micro);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--c-ink-muted);
+}
+
+/* ---- Curved journey ------------------------------------------------- */
+.journey {
+  position: relative;
+  width: 100%;
+  max-width: 1240px;
+  margin: clamp(2.5rem, 6vh, 4.5rem) auto 0;
+  height: clamp(580px, 62vw, 690px);
+}
+
+// Flowing connecting path (drawn on scroll via GSAP).
+.jx-path-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+.jx-path {
+  fill: none;
+  stroke: rgba(126, 156, 201, 0.6);
+  stroke-width: 2.6;
+  stroke-linecap: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 0;
+  transition:
+    stroke 0.4s var(--ease-out-soft),
+    filter 0.4s var(--ease-out-soft);
+}
+.jx-path.is-lit {
+  stroke: var(--c-accent-ink);
+  filter: drop-shadow(0 0 6px var(--glow-cool));
+}
+
+/* ---- Milestone node ------------------------------------------------- */
+.jx-node {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  width: 0;
+  height: 0;
+  z-index: 2;
+
+  &.is-hovered {
+    z-index: 5;
+  }
+}
+
+// Frosted glass-stone coin sitting on the path — translucent stone material with
+// raised 3D depth; the line-icon is tinted per milestone type.
+.jx-dot {
+  position: absolute;
+  top: 0;
+  left: 0;
+  translate: -50% -50%;
+  z-index: 2;
+  width: clamp(48px, 5vw, 62px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: var(--ic, var(--c-accent-ink));
+  --ic: var(--c-accent-ink);
+  background:
+    radial-gradient(circle at 50% 28%, rgba(255, 255, 255, 0.85), transparent 55%),
+    linear-gradient(160deg, rgba(244, 246, 250, 0.7), rgba(200, 206, 218, 0.5));
+  backdrop-filter: blur(12px) saturate(150%);
+  -webkit-backdrop-filter: blur(12px) saturate(150%);
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  box-shadow:
+    inset 0 2px 2px rgba(255, 255, 255, 0.85),
+    inset 0 -7px 11px rgba(120, 130, 152, 0.28),
+    0 7px 0 rgba(184, 190, 203, 0.6),
+    0 16px 24px -8px rgba(40, 50, 80, 0.4);
+  transition:
+    transform 0.18s cubic-bezier(0.34, 1.56, 0.5, 1),
+    box-shadow 0.18s cubic-bezier(0.34, 1.56, 0.5, 1);
+
+  // Glossy top highlight.
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 12% 20% 52%;
+    border-radius: 50%;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.8), transparent);
+    pointer-events: none;
+  }
+
+  svg {
+    position: relative;
+    width: 46%;
+    height: 46%;
+    filter: drop-shadow(0 1px 1px rgba(255, 255, 255, 0.6));
+  }
+}
+
+// Per-type icon tints.
+.jx-dot--edu {
+  --ic: #4a7fd6;
+}
+.jx-dot--work {
+  --ic: #c08a3a;
+}
+.jx-dot--award {
+  --ic: #8a63d6;
+}
+
+// Press the stone down like a 3D button on hover; glow in its type colour.
+.jx-node:hover .jx-dot,
+.jx-node.is-hovered .jx-dot {
+  transform: translateY(4px);
+  box-shadow:
+    inset 0 2px 2px rgba(255, 255, 255, 0.85),
+    inset 0 -7px 11px rgba(120, 130, 152, 0.28),
+    0 3px 0 rgba(184, 190, 203, 0.6),
+    0 8px 16px -6px rgba(40, 50, 80, 0.45),
+    0 0 22px color-mix(in srgb, var(--ic) 50%, transparent);
+}
+
+// Glass milestone card, above or below the node.
+.jx-card {
+  position: absolute;
+  left: 50%;
+  width: clamp(208px, 21vw, 264px);
+  transform: translateX(-50%);
+  padding: clamp(1rem, 1.5vw, 1.35rem);
+  border-radius: var(--r-lg);
+  @include glass(0.62, 20px, 0.8);
+  box-shadow:
+    var(--shadow-md),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  outline: none;
+  transition:
+    transform 0.4s var(--ease-out-soft),
+    box-shadow 0.4s var(--ease-out-soft),
+    border-color 0.4s var(--ease-out-soft);
+
+  // Stem connecting the card to the node.
+  &::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    translate: -50% 0;
+    width: 2px;
+    height: 2.1rem;
+    background: linear-gradient(var(--c-accent), transparent);
+  }
+}
+.jx-node.is-top .jx-card {
+  bottom: 2.1rem;
+}
+.jx-node.is-top .jx-card::after {
+  top: 100%;
+  background: linear-gradient(to bottom, var(--c-accent), transparent);
+}
+.jx-node:not(.is-top) .jx-card {
+  top: 2.1rem;
+}
+.jx-node:not(.is-top) .jx-card::after {
+  bottom: 100%;
+  background: linear-gradient(to top, var(--c-accent), transparent);
+}
+
+.jx-node:hover .jx-card,
+.jx-node:focus-within .jx-card {
+  transform: translateX(-50%) translateY(-8px) scale(1.035);
+  box-shadow:
+    var(--shadow-lg),
+    var(--shadow-glow);
+}
+.jx-node.is-top:hover .jx-card,
+.jx-node.is-top:focus-within .jx-card {
+  transform: translateX(-50%) translateY(-8px) scale(1.035);
+}
+
+.jx-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.6rem;
+}
+.jx-type {
+  font-size: var(--fs-micro);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--c-ink-muted);
+}
+// Prominent year badge — bold, tinted pill, the focal marker of each card.
+.jx-year {
+  font-family: var(--font-display);
+  font-size: var(--fs-small);
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  color: #fff;
+  padding: 0.28rem 0.7rem;
+  border-radius: var(--r-pill);
+  background: linear-gradient(135deg, var(--c-accent), var(--c-accent-ink));
+  box-shadow:
+    0 6px 14px -6px color-mix(in srgb, var(--c-accent-ink) 70%, transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  white-space: nowrap;
+}
+.jx-title {
+  margin-top: 0.5rem;
+  font-family: var(--font-display);
+  font-size: var(--fs-h3);
+  font-weight: 600;
+  line-height: 1.15;
+  color: var(--c-ink);
+}
+.jx-org {
+  margin-top: 0.2rem;
+  font-size: var(--fs-small);
+  color: var(--c-accent-ink);
+}
+.jx-summary {
+  margin-top: 0.55rem;
+  font-size: var(--fs-small);
+  line-height: 1.5;
+  color: var(--c-ink-muted);
+}
+.jx-skills {
+  list-style: none;
+  margin: 0.7rem 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+}
+.jx-skill {
+  padding: 0.2rem 0.55rem;
+  border-radius: var(--r-pill);
+  font-size: var(--fs-micro);
+  color: var(--c-ink-soft);
+  background: rgba(255, 255, 255, 0.55);
+  border: 1px solid var(--c-line);
+}
+
+/* ---- Responsive: vertical rail -------------------------------------- */
+@media (max-width: 860px) {
+  .journey {
+    height: auto;
+    max-width: 520px;
+    display: flex;
+    flex-direction: column;
+    gap: clamp(1.2rem, 4vw, 1.8rem);
+    padding-left: 1rem;
+  }
+  .jx-path-svg {
+    display: none;
+  }
+  // Left rail line.
+  .journey::before {
+    content: '';
+    position: absolute;
+    left: calc(1rem + 27px);
+    top: 0.5rem;
+    bottom: 0.5rem;
+    width: 2px;
+    background: linear-gradient(var(--c-accent), transparent);
+  }
+  .jx-node {
+    position: static;
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  .jx-dot {
+    position: static;
+    translate: none;
+    flex: none;
+  }
+  .jx-card {
+    position: static;
+    width: auto;
+    flex: 1;
+    transform: none;
+
+    &::after {
+      display: none;
+    }
+  }
+  .jx-node:hover .jx-card,
+  .jx-node:focus-within .jx-card,
+  .jx-node.is-top:hover .jx-card {
+    transform: translateY(-4px) scale(1.02);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .jx-dot,
+  .jx-card {
+    transition: none;
   }
 }

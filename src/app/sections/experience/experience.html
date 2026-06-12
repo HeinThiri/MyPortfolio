@@ -1,26 +1,84 @@
-<section #root id="experience" class="experience" aria-label="Experience timeline">
+<section #root id="experience" class="experience" aria-label="Professional journey">
   <div class="container">
     <header class="experience-head">
       <p class="eyebrow" auroraReveal>(04) — Journey</p>
-      <h2 auroraReveal="text">A steady climb toward craft.</h2>
+      <h2 auroraReveal="text">Professional Journey</h2>
+      <p class="experience-lead" auroraReveal>
+        A timeline of education, experience, achievements and continuous growth.
+      </p>
+
+      <ul class="jx-stats" aria-label="Highlights">
+        @for (s of stats; track s.label) {
+          <li class="jx-stat" auroraReveal>
+            <span class="jx-stat-value">{{ s.value }}</span>
+            <span class="jx-stat-label">{{ s.label }}</span>
+          </li>
+        }
+      </ul>
     </header>
 
-    <ol class="timeline">
-      <span class="timeline-track" aria-hidden="true">
-        <span class="timeline-progress"></span>
-      </span>
+    <!-- Curved journey path with milestone nodes -->
+    <div class="journey" [class.is-active]="hovered() !== null">
+      <svg class="jx-path-svg" viewBox="0 0 100 32" preserveAspectRatio="none" aria-hidden="true">
+        <path
+          class="jx-path"
+          [attr.d]="pathD"
+          pathLength="1"
+          vector-effect="non-scaling-stroke"
+          [class.is-lit]="hovered() !== null"
+        />
+      </svg>
 
-      @for (item of items; track item.period) {
-        <li class="milestone">
-          <span class="milestone-node" aria-hidden="true"></span>
-          <span class="milestone-period" auroraParallax="0.25">{{ item.period }}</span>
-          <div class="milestone-body">
-            <h3 class="milestone-role">{{ item.role }}</h3>
-            <p class="milestone-company">{{ item.company }}</p>
-            <p class="milestone-summary">{{ item.summary }}</p>
-          </div>
-        </li>
+      @for (m of milestones; track m.title; let i = $index) {
+        <div
+          class="jx-node"
+          [class.is-top]="nodes[i].top"
+          [class.is-hovered]="hovered() === i"
+          [style.--x.%]="nodes[i].x"
+          [style.--y.%]="(nodes[i].y / 32) * 100"
+          (pointerenter)="hovered.set(i)"
+          (pointerleave)="hovered.set(null)"
+        >
+          <span class="jx-dot" [class]="'jx-dot--' + m.iconKey" aria-hidden="true">
+            @switch (m.iconKey) {
+              @case ('edu') {
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M22 10 12 5 2 10l10 5 10-5Z" />
+                  <path d="M6 12v4.5c0 1.1 2.7 2.5 6 2.5s6-1.4 6-2.5V12" />
+                  <path d="M22 10v5.5" />
+                </svg>
+              }
+              @case ('award') {
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="9" r="6" />
+                  <path d="M9.2 14.3 8 22l4-2.3 4 2.3-1.2-7.7" />
+                </svg>
+              }
+              @default {
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="7" width="18" height="13" rx="2" />
+                  <path d="M8 7V5.5A2.5 2.5 0 0 1 10.5 3h3A2.5 2.5 0 0 1 16 5.5V7" />
+                  <path d="M3 12.5h18" />
+                </svg>
+              }
+            }
+          </span>
+          <article class="jx-card" tabindex="0" (focus)="hovered.set(i)" (blur)="hovered.set(null)">
+            <header class="jx-card-head">
+              <span class="jx-type">{{ m.type }}</span>
+              <span class="jx-year">{{ m.year }}</span>
+            </header>
+            <h3 class="jx-title">{{ m.title }}</h3>
+            <p class="jx-org">{{ m.org }}</p>
+            <p class="jx-summary">{{ m.summary }}</p>
+            <ul class="jx-skills">
+              @for (sk of m.skills; track sk) {
+                <li class="jx-skill">{{ sk }}</li>
+              }
+            </ul>
+          </article>
+        </div>
       }
-    </ol>
+    </div>
   </div>
 </section>

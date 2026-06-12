@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <rect width="128" height="128" rx="26" fill="#673DE6"/>
+  <!-- H monogram -->
+  <path d="M41 37h13v21h20V37h13v54H74V70H54v21H41z" fill="#ffffff"/>
+</svg>

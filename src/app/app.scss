@@ -15,10 +15,10 @@
     radial-gradient(60% 50% at 85% 20%, var(--glow-cool), transparent 55%),
     radial-gradient(70% 60% at 10% 80%, var(--glow-warm), transparent 60%),
     var(--grad-aurora);
-  opacity: 0.92;
-  // Let the 3D show through the middle band.
-  -webkit-mask-image: radial-gradient(60% 50% at 50% 38%, transparent 30%, #000 75%);
-  mask-image: radial-gradient(60% 50% at 50% 38%, transparent 30%, #000 75%);
+  opacity: 0.78;
+  // Let the Three.js scene show through the viewport centre.
+  -webkit-mask-image: radial-gradient(72% 62% at 50% 42%, transparent 18%, #000 80%);
+  mask-image: radial-gradient(72% 62% at 50% 42%, transparent 18%, #000 80%);
 }
 
 #content {

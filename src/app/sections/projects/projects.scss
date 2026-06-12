@@ -4,139 +4,399 @@
   position: relative;
   z-index: var(--z-content);
   @include section-pad;
+  overflow: hidden;
+  // Soft theme shade across the whole section.
+  background:
+    radial-gradient(120% 70% at 50% -8%, rgba(143, 179, 224, 0.14), transparent 55%),
+    linear-gradient(
+      180deg,
+      var(--c-bg-elev) 0%,
+      var(--c-bg) 30%,
+      var(--c-bg) 72%,
+      var(--c-bg-sink) 100%
+    );
+
+  // Dot-grid background pattern, fading out toward the bottom.
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-image: radial-gradient(rgba(40, 60, 96, 0.06) 1px, transparent 1.5px);
+    background-size: 26px 26px;
+    -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 68%, transparent 100%);
+    mask-image: linear-gradient(180deg, #000 0%, #000 68%, transparent 100%);
+  }
 }
 
+/* ---- Header --------------------------------------------------------- */
 .projects-head {
-  max-width: 24ch;
-  margin-bottom: clamp(3rem, 8vh, 6rem);
+  text-align: center;
+  max-width: 760px;
+  margin-inline: auto;
+
   h2 {
     font-size: var(--fs-h2);
-    margin-top: 1rem;
+    line-height: var(--lh-snug);
+    margin-top: 0.8rem;
   }
 }
-
-.projects-list {
-  display: flex;
-  flex-direction: column;
-  gap: clamp(3rem, 9vh, 8rem);
+.projects-lead {
+  margin-top: clamp(0.9rem, 2vh, 1.4rem);
+  color: var(--c-ink-muted);
+  font-size: var(--fs-lead);
+  line-height: var(--lh-body);
 }
 
-.project {
-  display: grid;
-  grid-template-columns: 1.05fr 1fr;
-  gap: clamp(1.5rem, 4vw, 4rem);
-  align-items: center;
-  will-change: transform, opacity, filter;
-
-  &:nth-child(even) {
-    direction: rtl;
-    .project-info {
-      direction: ltr;
-    }
-    .project-media {
-      direction: ltr;
-    }
-  }
-}
-
-.project-media {
+/* ---- Immersive floating canvas -------------------------------------- */
+.eco-canvas {
   position: relative;
-  aspect-ratio: 4 / 3;
-  border-radius: var(--r-lg);
-  overflow: hidden;
-  box-shadow: var(--shadow-lg);
-  border: 1px solid rgba(255, 255, 255, 0.6);
-  display: grid;
-  place-items: center;
+  width: 100%;
+  max-width: 1280px;
+  margin: clamp(2.5rem, 6vh, 4.5rem) auto 0;
+  min-height: clamp(640px, 66vw, 880px);
+  perspective: 1400px;
+  --px: 0;
+  --py: 0;
 }
-.project-index {
-  font-family: var(--font-display);
-  font-size: clamp(5rem, 14vw, 11rem);
-  font-weight: 600;
-  letter-spacing: -0.04em;
-  color: rgba(255, 255, 255, 0.55);
-  mix-blend-mode: overlay;
-  will-change: transform;
-}
-.project-orb {
+
+/* ---- Mesh-gradient background --------------------------------------- */
+.eco-bg {
   position: absolute;
+  inset: -8% -4%;
+  z-index: 0;
+  pointer-events: none;
+  transform: translate(calc(var(--px) * -10px), calc(var(--py) * -10px));
+  transition: transform 0.4s var(--ease-out-soft);
+}
+.eco-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: 0.7;
+  animation: eco-drift 18s var(--ease-in-out) infinite;
+}
+.eco-blob--1 {
   width: 46%;
   aspect-ratio: 1;
-  border-radius: 50%;
-  background: radial-gradient(circle at 35% 30%, #ffffff, rgba(255, 255, 255, 0) 70%);
-  filter: blur(2px);
-  opacity: 0.7;
-  animation: float 9s var(--ease-in-out) infinite;
+  left: 6%;
+  top: 8%;
+  background: radial-gradient(circle, rgba(143, 179, 224, 0.5), transparent 70%);
+}
+.eco-blob--2 {
+  width: 40%;
+  aspect-ratio: 1;
+  right: 4%;
+  top: 30%;
+  background: radial-gradient(circle, rgba(231, 214, 184, 0.45), transparent 70%);
+  animation-delay: -6s;
+}
+.eco-blob--3 {
+  width: 38%;
+  aspect-ratio: 1;
+  left: 30%;
+  bottom: 2%;
+  background: radial-gradient(circle, rgba(169, 220, 227, 0.45), transparent 70%);
+  animation-delay: -11s;
+}
+// Themed pattern — a fine blue-accent grid mesh with dot intersections, plus a
+// soft champagne wash, fading out toward the edges so it blends with the page.
+.eco-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(rgba(126, 156, 201, 0.16) 1.4px, transparent 1.6px),
+    linear-gradient(rgba(143, 179, 224, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(143, 179, 224, 0.08) 1px, transparent 1px),
+    radial-gradient(120% 90% at 78% 20%, rgba(231, 214, 184, 0.12), transparent 60%);
+  background-size:
+    40px 40px,
+    40px 40px,
+    40px 40px,
+    100% 100%;
+  background-position:
+    0 0,
+    0 0,
+    0 0,
+    0 0;
+  -webkit-mask-image: radial-gradient(circle at 50% 50%, #000 30%, transparent 80%);
+  mask-image: radial-gradient(circle at 50% 50%, #000 30%, transparent 80%);
 }
 
-.project-info {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 1rem;
-}
-.project-meta {
-  display: flex;
-  gap: 1.5rem;
-  @include eyebrow;
-}
-.project-title {
-  font-size: clamp(2rem, 4vw, 3.4rem);
-  line-height: 1;
-}
-.project-tagline {
-  font-size: var(--fs-lead);
-  color: var(--c-accent-ink);
-}
-.project-desc {
-  color: var(--c-ink-soft);
-}
-.project-stack {
-  list-style: none;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  li {
-    font-size: var(--fs-small);
-    padding: 0.3rem 0.75rem;
-    border-radius: var(--r-pill);
-    border: 1px solid var(--c-line);
-    color: var(--c-ink-muted);
-  }
-}
-.project-link {
-  margin-top: 0.6rem;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.6rem;
-  padding: 0.85rem 1.5rem;
-  border-radius: var(--r-pill);
-  background: var(--c-ink);
-  color: #fff;
-  font-size: var(--fs-small);
-  font-weight: 500;
-  .arrow {
-    transition: transform var(--dur-fast) var(--ease-out-soft);
-  }
-  &:hover .arrow {
-    transform: translateX(5px);
-  }
-}
-
-@keyframes float {
+@keyframes eco-drift {
   0%,
   100% {
-    transform: translateY(-6%);
+    transform: translate(0, 0) scale(1);
   }
   50% {
-    transform: translateY(6%);
+    transform: translate(4%, -3%) scale(1.08);
   }
 }
 
-@media (max-width: 880px) {
-  .project,
-  .project:nth-child(even) {
-    grid-template-columns: 1fr;
-    direction: ltr;
+/* ---- Connection paths ----------------------------------------------- */
+.eco-links {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: visible;
+  transform: translate(calc(var(--px) * 6px), calc(var(--py) * 6px));
+  transition: transform 0.4s var(--ease-out-soft);
+}
+.eco-link {
+  fill: none;
+  // Always visible dotted path; brightens + thickens on hover.
+  stroke: rgba(110, 142, 190, 0.7);
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-dasharray: 2 7;
+  animation: eco-dash 5s linear infinite;
+  transition:
+    stroke 0.35s var(--ease-out-soft),
+    stroke-width 0.35s var(--ease-out-soft),
+    filter 0.35s var(--ease-out-soft);
+}
+.eco-link.is-active {
+  stroke: var(--c-accent-ink);
+  stroke-width: 2.8;
+  filter: drop-shadow(0 0 6px var(--glow-cool));
+}
+@keyframes eco-dash {
+  to {
+    stroke-dashoffset: -27;
+  }
+}
+
+/* ---- Floating business badges --------------------------------------- */
+.eco-badge {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.5rem 0.85rem;
+  border-radius: var(--r-pill);
+  font-size: var(--fs-small);
+  font-weight: 500;
+  white-space: nowrap;
+  color: var(--c-ink-soft);
+  @include glass(0.5, 14px, 0.7);
+  pointer-events: none;
+  animation: eco-badge-float 7s var(--ease-in-out) infinite;
+  animation-delay: var(--delay, 0s);
+  translate: -50% -50%;
+}
+.eco-badge-ico {
+  font-size: 0.95em;
+  line-height: 1;
+}
+@keyframes eco-badge-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-9px);
+  }
+}
+
+/* ---- Floating project cards ----------------------------------------- */
+// Parallax layer (uniform) so it never fights the per-card swap transition.
+.eco-cards {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  transform: translate(calc(var(--px) * 8px), calc(var(--py) * 8px));
+  transition: transform 0.4s var(--ease-out-soft);
+}
+
+.eco-card {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  z-index: 3;
+  width: clamp(220px, 24vw, 300px);
+  text-decoration: none;
+  color: inherit;
+  --depth: 1;
+  transform: translate(-50%, -50%) rotate(var(--rot, 0deg));
+  // Slow, expressive easing for the slot-to-slot swap.
+  transition:
+    left 0.95s var(--ease-expo),
+    top 0.95s var(--ease-expo),
+    transform 0.95s var(--ease-expo);
+
+  &.is-hovered {
+    z-index: 5;
+  }
+}
+
+// Inner element carries the glass look + float + hover lift (separate from the
+// outer parallax/rotation transform).
+.eco-card-inner {
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  @include glass(0.62, 20px, 0.8);
+  box-shadow:
+    var(--shadow-lg),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.4);
+  animation: eco-card-float 8s var(--ease-in-out) infinite;
+  animation-delay: calc(var(--depth) * -1.2s);
+  transition:
+    transform 0.45s var(--ease-out-soft),
+    box-shadow 0.45s var(--ease-out-soft);
+}
+.eco-card:hover .eco-card-inner,
+.eco-card:focus-visible .eco-card-inner {
+  animation-play-state: paused;
+  transform: translateY(-12px) scale(1.045);
+  box-shadow:
+    var(--shadow-lg),
+    var(--shadow-glow),
+    inset 0 0 0 1px var(--glow-cool);
+}
+@keyframes eco-card-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-7px);
+  }
+}
+
+.eco-card-media {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s var(--ease-out-soft);
+  }
+}
+.eco-card:hover .eco-card-media img {
+  transform: scale(1.07);
+}
+.eco-status {
+  position: absolute;
+  top: 0.7rem;
+  right: 0.7rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.25rem 0.6rem;
+  border-radius: var(--r-pill);
+  font-size: var(--fs-micro);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: #fff;
+  background: rgba(28, 27, 26, 0.42);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+
+  &::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #5fe39b;
+    box-shadow: 0 0 6px #5fe39b;
+  }
+}
+
+.eco-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: clamp(1rem, 1.6vw, 1.4rem);
+}
+.eco-card-cat {
+  font-size: var(--fs-micro);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--c-accent-ink);
+}
+.eco-card-title {
+  font-family: var(--font-display);
+  font-size: var(--fs-h3);
+  font-weight: 600;
+  line-height: 1.15;
+  color: var(--c-ink);
+}
+.eco-card-desc {
+  font-size: var(--fs-small);
+  color: var(--c-ink-muted);
+  line-height: 1.5;
+}
+.eco-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-top: 0.15rem;
+}
+.eco-chip {
+  padding: 0.2rem 0.55rem;
+  border-radius: var(--r-pill);
+  font-size: var(--fs-micro);
+  color: var(--c-ink-soft);
+  background: rgba(255, 255, 255, 0.55);
+  border: 1px solid var(--c-line);
+}
+.eco-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 0.35rem;
+  font-size: var(--fs-small);
+  font-weight: 600;
+  color: var(--c-accent-ink);
+}
+.eco-arrow {
+  transition: transform 0.35s var(--ease-out-soft);
+}
+.eco-card:hover .eco-arrow {
+  transform: translateX(5px);
+}
+
+/* ---- Responsive: collapse the canvas to a clean stack --------------- */
+@media (max-width: 860px) {
+  .eco-canvas {
+    min-height: 0;
+    perspective: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(1.5rem, 5vw, 2.5rem);
+  }
+  .eco-links,
+  .eco-badge {
+    display: none;
+  }
+  .eco-card {
+    position: static;
+    width: min(360px, 100%);
+    transform: none;
+  }
+  .eco-card-inner {
+    animation: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .eco-blob,
+  .eco-link,
+  .eco-badge,
+  .eco-card-inner {
+    animation: none;
   }
 }

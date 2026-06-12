@@ -1,37 +1,92 @@
-<section #root id="projects" class="projects" aria-label="Selected work">
-  <div class="container">
-    <header class="projects-head">
-      <p class="eyebrow" auroraReveal>(03) — Selected Work</p>
-      <h2 auroraReveal="text">Experiences engineered to be felt, not just used.</h2>
-    </header>
+<section id="projects" class="projects" aria-label="Selected work">
+  <header class="projects-head container">
+    <p class="eyebrow" auroraReveal>(03) — Selected Work</p>
+    <h2 auroraReveal="text">A connected ecosystem of digital products.</h2>
+    <p class="projects-lead" auroraReveal>
+      Each project links innovation, problem-solving and business impact. Hover to
+      trace the connections — click any card to explore the full case study.
+    </p>
+  </header>
 
-    <div class="projects-list">
-      @for (p of projects; track p.index) {
-        <article class="project" data-cursor="hover">
-          <div class="project-media" [style.background]="p.accent">
-            <span class="project-index">{{ p.index }}</span>
-            <span class="project-orb"></span>
-          </div>
+  <!-- Immersive floating canvas -->
+  <div
+    #canvas
+    class="eco-canvas"
+    [style.--px]="px()"
+    [style.--py]="py()"
+    (pointermove)="onMove($event, canvas)"
+    (pointerleave)="onLeave()"
+  >
+    <!-- Mesh-gradient / glow background -->
+    <div class="eco-bg" aria-hidden="true">
+      <span class="eco-blob eco-blob--1"></span>
+      <span class="eco-blob eco-blob--2"></span>
+      <span class="eco-blob eco-blob--3"></span>
+      <span class="eco-grid"></span>
+    </div>
 
-          <div class="project-info">
-            <div class="project-meta">
-              <span>{{ p.year }}</span>
-              <span>{{ p.role }}</span>
-            </div>
-            <h3 class="project-title">{{ p.title }}</h3>
-            <p class="project-tagline serif italic">{{ p.tagline }}</p>
-            <p class="project-desc">{{ p.description }}</p>
-            <ul class="project-stack">
-              @for (tech of p.stack; track tech) {
-                <li>{{ tech }}</li>
+    <!-- Animated dotted connection paths -->
+    <svg class="eco-links" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+      @for (c of connections; track $index) {
+        <path
+          class="eco-link"
+          [class.is-active]="isActive(c)"
+          [attr.d]="c.d"
+          vector-effect="non-scaling-stroke"
+        />
+      }
+    </svg>
+
+    <!-- Floating business badges -->
+    @for (b of badges; track b.label) {
+      <span
+        class="eco-badge"
+        aria-hidden="true"
+        [style.--x.%]="b.x"
+        [style.--y.%]="b.y"
+        [style.--depth]="b.depth"
+        [style.--delay]="b.delay + 's'"
+      >
+        <span class="eco-badge-ico">{{ b.icon }}</span>{{ b.label }}
+      </span>
+    }
+
+    <!-- Floating project cards (cycle through the slots once in view) -->
+    <div class="eco-cards">
+      @for (p of projects; track p.slug; let i = $index) {
+      <a
+        class="eco-card"
+        [routerLink]="['/work', p.slug]"
+        [class.is-hovered]="hovered() === i"
+        [style.--x.%]="layout[slots()[i]].x"
+        [style.--y.%]="layout[slots()[i]].y"
+        [style.--rot]="layout[slots()[i]].rot + 'deg'"
+        [style.--depth]="layout[slots()[i]].depth"
+        (pointerenter)="hovered.set(i)"
+        (pointerleave)="hovered.set(null)"
+        (focus)="hovered.set(i)"
+        (blur)="hovered.set(null)"
+        data-cursor="hover"
+        [attr.aria-label]="p.title + ' — view case study'"
+      >
+        <span class="eco-card-inner">
+          <span class="eco-card-media">
+            <img [src]="p.image" [alt]="p.title" loading="lazy" />
+            <span class="eco-status">Live</span>
+          </span>
+          <span class="eco-card-body">
+            <span class="eco-card-cat">{{ p.category }}</span>
+            <span class="eco-card-title">{{ p.title }}</span>
+            <span class="eco-card-desc">{{ p.tagline }}</span>
+            <span class="eco-stack">
+              @for (t of p.stack.slice(0, 3); track t) {
+                <span class="eco-chip">{{ t }}</span>
               }
-            </ul>
-            <button class="project-link" auroraMagnetic>
-              View case study
-              <span class="arrow">→</span>
-            </button>
-          </div>
-        </article>
+            </span>
+            <span class="eco-cta">View case study<span class="eco-arrow">→</span></span>
+          </span>
+        </span>
+      </a>
       }
     </div>
   </div>

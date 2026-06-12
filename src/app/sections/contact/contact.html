@@ -1,40 +1,121 @@
 <section #root id="contact" class="contact" aria-label="Contact">
-  <div class="contact-glow" aria-hidden="true" auroraParallax="0.3"></div>
+  <header class="contact-head container contact-fade">
+    <h2 class="contact-title">Contact Us</h2>
+    <p class="contact-sub">
+      Have a project in mind or just want to say hello? Reach out and let’s build
+      something great together.
+    </p>
+  </header>
 
-  <div class="container contact-inner">
-    <p class="eyebrow contact-fade">(05) — Let’s create</p>
+  <div class="contact-band">
+    <div class="container contact-grid">
+      <!-- Get in touch -->
+      <div class="contact-info contact-fade">
+        <h3 class="contact-h">Get In Touch</h3>
+        <p class="contact-intro">
+          I’m available for freelance work and full-time roles — let’s talk about
+          how I can help bring your ideas to life.
+        </p>
 
-    <h2 class="contact-headline">
-      Have an idea worth <span class="serif italic">obsessing</span> over?
-    </h2>
+        <ul class="contact-list">
+          @for (c of contacts; track c.type) {
+            <li class="contact-item">
+              <span class="contact-ico" aria-hidden="true">
+                @switch (c.icon) {
+                  @case ('pin') {
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.3 7-11a7 7 0 1 0-14 0c0 4.7 7 11 7 11Z"/><circle cx="12" cy="10" r="2.6"/></svg>
+                  }
+                  @case ('phone') {
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h3l2 5-2.5 1.5a12 12 0 0 0 5 5L16 13l5 2v3a2 2 0 0 1-2.2 2A16 16 0 0 1 3 6.2 2 2 0 0 1 5 4Z"/></svg>
+                  }
+                  @default {
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+                  }
+                }
+              </span>
+              <div class="contact-item-text">
+                <span class="contact-item-label">{{ c.type }}</span>
+                @if (c.href) {
+                  <a class="contact-item-val" [href]="c.href" data-cursor="hover">{{ c.value }}</a>
+                } @else {
+                  <span class="contact-item-val">{{ c.value }}</span>
+                }
+              </div>
+            </li>
+          }
+        </ul>
 
-    <a
-      class="contact-cta"
-      href="mailto:hello@aurora.dev"
-      auroraMagnetic
-      data-cursor="hover"
-    >
-      <span>hello&#64;aurora.dev</span>
-      <span class="contact-cta-arrow">→</span>
-    </a>
+        <div class="contact-follow">
+          <span class="contact-follow-label">Follow Us:</span>
+          <ul class="contact-socials">
+            @for (s of socials; track s.label) {
+              <li>
+                <a [href]="s.href" [attr.aria-label]="s.label" data-cursor="hover">
+                  @switch (s.icon) {
+                    @case ('github') {
+                      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.53 2.36 1.09 2.94.83.09-.65.35-1.1.63-1.35-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.5 9.5 0 0 1 5 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.69-4.57 4.94.36.31.68.92.68 1.85v2.74c0 .27.18.58.69.48A10 10 0 0 0 12 2Z"/></svg>
+                    }
+                    @case ('linkedin') {
+                      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.94 5a2 2 0 1 1-4 0 2 2 0 0 1 4 0ZM3.5 8.5h3v12h-3zM9 8.5h2.87v1.64h.04c.4-.76 1.38-1.56 2.84-1.56 3.04 0 3.6 2 3.6 4.6v6.32h-3v-5.6c0-1.34-.02-3.06-1.87-3.06-1.87 0-2.16 1.46-2.16 2.96v5.7H9z"/></svg>
+                    }
+                    @case ('globe') {
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c2.5 2.6 3.8 5.7 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3z"/></svg>
+                    }
+                    @default {
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+                    }
+                  }
+                </a>
+              </li>
+            }
+          </ul>
+        </div>
+      </div>
 
-    <ul class="contact-socials contact-fade">
-      @for (s of socials; track s.label) {
-        <li><a [href]="s.href" data-cursor="hover">{{ s.label }}</a></li>
-      }
-    </ul>
+      <!-- Send a message -->
+      <form class="contact-form contact-fade" (submit)="onSubmit($event)">
+        <h3 class="contact-h">Send a Message</h3>
+        <input class="contact-field" name="from_name" type="text" placeholder="Name" required />
+        <input
+          class="contact-field"
+          name="from_email"
+          type="email"
+          placeholder="E-mail address"
+          required
+        />
+        <textarea
+          class="contact-field contact-field--area"
+          name="message"
+          rows="5"
+          placeholder="Message"
+          required
+        ></textarea>
+
+        @if (state() === 'sent') {
+          <p class="contact-status is-ok" role="status">✓ Thanks! Your message has been sent.</p>
+        } @else if (state() === 'fallback') {
+          <p class="contact-status is-err" role="status">
+            Opening your email app instead — or reach me directly at heinthiri2000&#64;gmail.com.
+          </p>
+        }
+
+        <button
+          class="contact-submit"
+          type="submit"
+          data-cursor="hover"
+          [disabled]="state() === 'sending'"
+        >
+          {{ state() === 'sending' ? 'Sending…' : 'Submit' }}
+        </button>
+      </form>
+    </div>
   </div>
 
   <footer class="footer contact-fade">
     <div class="container footer-inner">
-      <span class="footer-brand serif italic" auroraParallax="-0.2">Aurora</span>
-      <p class="footer-note">
-        Designed & engineered with Angular, Three.js & GSAP. ©
-        {{ year }} Aurora.
-      </p>
-      <button class="footer-top" (click)="scrollTop()" data-cursor="hover">
-        Back to top ↑
-      </button>
+      <span class="footer-brand serif italic">Hein Thiri Htun</span>
+      <p class="footer-note">Designed &amp; engineered with Angular, Three.js &amp; GSAP. © {{ year }}.</p>
+      <button class="footer-top" (click)="scrollTop()" data-cursor="hover">Back to top ↑</button>
     </div>
   </footer>
 </section>

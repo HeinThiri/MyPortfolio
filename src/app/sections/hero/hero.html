@@ -1,21 +1,80 @@
 <section #root id="hero" class="hero" aria-label="Introduction">
+  <div class="hero-bg" aria-hidden="true"></div>
+
   <div class="hero-inner container">
-    <!-- <p class="hero-eyebrow eyebrow">Frontend Developer · Creative Engineer</p> -->
+    <div class="hero-layout">
+      <div class="hero-content">
+        <!-- <p class="hero-greeting">
+          <span class="hero-greeting-badge">Hello!</span>
+        </p> -->
 
-    <h1 class="hero-title">
-      <span class="reveal-line"><span class="word">Crafting</span></span>
-      <span class="reveal-line"
-        ><span class="word serif italic">immersive</span>&nbsp; <span class="word">web</span></span
-      >
-      <span class="reveal-line"><span class="word">experiences.</span></span>
-    </h1>
+        <h1 class="hero-name">
+          <span class="reveal-line">
+            <span class="word">Hein</span>
+            <span class="word">Thiri</span>
+            <span class="word">Htun</span>
+          </span>
+        </h1>
 
-    <div class="hero-aside">
-      <p>
-        <span class="hero-aside-text">
-          Frontend developer crafting responsive, performant web experiences in Angular — backed by C# / ASP.NET Core.
-        </span>
-      </p>
+        <p class="hero-role">
+          <span class="hero-role-line" aria-hidden="true"></span>
+          <span class="hero-typing-banner" aria-live="polite">
+            <span class="hero-typing-label">I'm a</span>
+            <span class="hero-typing-text">{{ typingText() }}</span>
+            <span class="hero-typing-cursor" aria-hidden="true">|</span>
+          </span>
+        </p>
+
+        <div class="hero-actions">
+          <a class="hero-btn hero-btn--cv" href="/cv.pdf" download data-cursor="hover">
+            Download CV
+          </a>
+          <a class="hero-btn hero-btn--message" href="#contact" data-cursor="hover">
+            Send Message
+          </a>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div class="hero-scene" aria-hidden="true">
+          <!-- Connected-dot network drifting behind the figure -->
+          <svg class="hero-network" viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice">
+            <g class="hero-network-lines">
+              <line x1="58" y1="92" x2="150" y2="60" />
+              <line x1="150" y1="60" x2="300" y2="110" />
+              <line x1="300" y1="110" x2="344" y2="220" />
+              <line x1="344" y1="220" x2="280" y2="320" />
+              <line x1="58" y1="92" x2="70" y2="240" />
+              <line x1="70" y1="240" x2="150" y2="340" />
+            </g>
+            <g class="hero-network-dots">
+              <circle cx="58" cy="92" r="4" />
+              <circle cx="150" cy="60" r="5" />
+              <circle cx="300" cy="110" r="4" />
+              <circle cx="344" cy="220" r="6" />
+              <circle cx="280" cy="320" r="4" />
+              <circle cx="70" cy="240" r="5" />
+              <circle cx="150" cy="340" r="4" />
+            </g>
+          </svg>
+
+          <!-- Floating gradient planets -->
+          <span class="hero-planet hero-planet--lg"></span>
+          <span class="hero-planet hero-planet--md"></span>
+          <span class="hero-planet hero-planet--sm"></span>
+
+          <!-- Glowing platform ring beneath the figure -->
+          <span class="hero-platform"></span>
+
+          <!-- Real person as a 3D model (GLB) rendered over the platform. -->
+          <canvas
+            #figure
+            class="hero-figure"
+            aria-label="Hein Thiri Htun — Frontend Developer"
+          ></canvas>
+        </div>
+        <a class="hero-btn hero-btn--hire" href="#contact" data-cursor="hover">Hire Me</a>
+      </div>
     </div>
   </div>
 
@@ -23,29 +82,4 @@
     <span class="hero-hint-label">Scroll</span>
     <span class="hero-hint-track"><span class="hero-hint-dot"></span></span>
   </div>
-
-  <!-- Ocean wave divider (CSS-animated, layered SVG) -->
-  <!-- <div class="hero-waves" aria-hidden="true">
-    <svg
-      class="waves"
-      xmlns="http://www.w3.org/2000/svg"
-      xmlns:xlink="http://www.w3.org/1999/xlink"
-      viewBox="0 24 150 28"
-      preserveAspectRatio="none"
-      shape-rendering="auto"
-    >
-      <defs>
-        <path
-          id="ocean-wave"
-          d="M-160 44c30 0 58-18 88-18s58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"
-        />
-      </defs>
-      <g class="wave-layers">
-        <use href="#ocean-wave" x="48" y="0" class="wave wave-1" />
-        <use href="#ocean-wave" x="48" y="3" class="wave wave-2" />
-        <use href="#ocean-wave" x="48" y="5" class="wave wave-3" />
-        <use href="#ocean-wave" x="48" y="7" class="wave wave-4" />
-      </g>
-    </svg>
-  </div> -->
 </section>

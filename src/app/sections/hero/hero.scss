@@ -5,73 +5,361 @@
   min-height: 100svh;
   display: flex;
   align-items: center;
-  // Clear the fixed nav so the title never tucks underneath it.
   padding-top: clamp(6rem, 12vh, 9rem);
   padding-bottom: clamp(4rem, 8vh, 6rem);
   z-index: var(--z-content);
+  overflow: hidden;
+}
+
+// Faint doodle texture only — keeps the Three.js scene visible behind the hero.
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: url('/images/hero-doodles.svg') repeat;
+  background-size: 280px 280px;
+  opacity: 0.22;
+  pointer-events: none;
 }
 
 .hero-inner {
   position: relative;
+  width: 100%;
 }
 
-.hero-eyebrow {
-  margin-bottom: clamp(1.2rem, 3vh, 2.2rem);
+.hero-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.75fr);
+  gap: clamp(2rem, 5vw, 4.5rem);
+  align-items: center;
 }
 
-.hero-title {
-  font-size: 56px;
-  line-height: 1.06;
-  font-weight: 600;
+.hero-content {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1rem, 2.5vh, 1.6rem);
+  max-width: 48rem;
+  width: 100%;
+}
+
+.hero-greeting {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.55rem;
+  margin: 0;
+}
+
+.hero-greeting-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.42rem 0.9rem;
+  border-radius: 4px;
+  font-size: var(--fs-small);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #fff;
+  background: #f4b400;
+  box-shadow: 0 8px 20px rgba(244, 180, 0, 0.28);
+}
+
+.hero-name {
+  font-size: clamp(2.4rem, 5.8vw, 4.6rem);
+  line-height: 1.05;
+  font-weight: 800;
   letter-spacing: -0.03em;
+  color: #00b8c8; // fallback if background-clip is unsupported
+  text-transform: capitalize;
+  white-space: nowrap;
 
   .reveal-line {
-    display: block;
-    overflow: hidden;
-    padding-bottom: 0.06em;
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 0 0.28em;
+    padding-bottom: 0.04em;
+    max-width: 100%;
   }
+
   .word {
     display: inline-block;
-    will-change: transform;
-  }
-  .serif {
-    font-weight: 400;
-    letter-spacing: -0.01em;
-    background: var(--grad-accent);
+    will-change: transform, filter, opacity;
+    white-space: nowrap;
+    // Teal → blue gradient — ties the name to the role text, planets and the
+    // cool rim light on the 3D figure while keeping strong contrast.
+    background: linear-gradient(120deg, #00b8c8 0%, #2f8fc4 45%, var(--c-accent-ink) 100%);
     -webkit-background-clip: text;
     background-clip: text;
+    -webkit-text-fill-color: transparent;
     color: transparent;
   }
 }
 
-.hero-aside {
-  margin-top: clamp(1.6rem, 4vh, 2.6rem);
-  max-width: 44ch;
-  p {
-    font-size: var(--fs-lead);
-    color: var(--c-ink-soft);
-    font-weight: 300;
-    overflow: hidden; // clip the rising text for the masked reveal
+.hero-role {
+  display: flex;
+  align-items: stretch;
+  gap: 0.9rem;
+  margin: 0.25rem 0 0;
+}
+
+.hero-role-line {
+  flex: none;
+  width: 4px;
+  border-radius: var(--r-pill);
+  background: linear-gradient(180deg, var(--c-blue), var(--c-accent));
+}
+
+// Plain typing text for the role line — no banner background.
+.hero-typing-banner {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.45rem;
+  min-height: 3rem;
+  padding: 0.65rem 0;
+}
+
+.hero-typing-label {
+  font-family: var(--font-display);
+  font-size: clamp(1rem, 2vw, 1.35rem);
+  font-weight: 500;
+  color: var(--c-ink-muted);
+}
+
+.hero-typing-text {
+  font-family: var(--font-display);
+  font-size: clamp(1.1rem, 2.2vw, 1.65rem);
+  font-weight: 700;
+  color: var(--c-accent-ink);
+  min-width: 1ch;
+}
+
+.hero-typing-cursor {
+  font-family: var(--font-display);
+  font-size: clamp(1.1rem, 2.2vw, 1.65rem);
+  font-weight: 300;
+  color: var(--c-accent-ink);
+  animation: typing-cursor 0.85s step-end infinite;
+}
+
+@keyframes typing-cursor {
+  0%,
+  100% {
+    opacity: 1;
   }
-  .hero-aside-text {
-    display: inline-block;
-    will-change: transform;
+  50% {
+    opacity: 0;
   }
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+  margin-top: clamp(0.5rem, 2vh, 1.2rem);
+}
+
+.hero-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.82rem 1.65rem;
+  border-radius: var(--r-pill);
+  font-size: var(--fs-body);
+  font-weight: 700;
+  color: #fff;
+  text-decoration: none;
+  border: none;
+  box-shadow: 0 10px 24px rgba(28, 27, 26, 0.14);
+  transition:
+    transform 0.35s var(--ease-out-soft),
+    box-shadow 0.35s var(--ease-out-soft);
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 16px 32px rgba(28, 27, 26, 0.18);
+  }
+}
+
+// Secondary action — neutral "ghost" button so only the primary CTA carries colour.
+.hero-btn--cv {
+  color: var(--c-ink);
+  background: var(--c-surface);
+  border: 1px solid var(--c-line);
+  box-shadow: 0 8px 20px rgba(28, 27, 26, 0.08);
+}
+
+// Primary action — single solid accent blue.
+.hero-btn--message {
+  background: var(--c-accent-ink);
+  border: 1px solid var(--c-accent-ink);
+}
+
+.hero-visual {
+  position: relative;
+  justify-self: center;
+  width: min(100%, 460px);
+}
+
+// Light-themed isometric stage: soft gradient panel holding the figure,
+// a glowing platform, floating gradient planets and a dot network.
+.hero-scene {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  width: 100%;
+  background: transparent;
+}
+
+// Drifting connected-dot constellation.
+.hero-network {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.55;
+
+  .hero-network-lines line {
+    stroke: var(--c-accent);
+    stroke-width: 1;
+    opacity: 0.4;
+  }
+
+  .hero-network-dots circle {
+    fill: var(--c-accent-ink);
+    animation: hero-twinkle 3.6s var(--ease-in-out) infinite;
+  }
+
+  // Stagger the twinkle so dots pulse out of sync.
+  .hero-network-dots circle:nth-child(2n) { animation-delay: 0.9s; }
+  .hero-network-dots circle:nth-child(3n) { animation-delay: 1.8s; }
+}
+
+@keyframes hero-twinkle {
+  0%, 100% { opacity: 0.35; }
+  50%      { opacity: 1; }
+}
+
+// Floating gradient spheres — light-palette take on the reference planets.
+.hero-planet {
+  position: absolute;
+  border-radius: 50%;
+  will-change: transform;
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 18% 50% 50% 18%;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.55);
+    filter: blur(4px);
+  }
+}
+
+.hero-planet--lg {
+  width: 26%;
+  aspect-ratio: 1;
+  top: 6%;
+  right: 4%;
+  background: radial-gradient(circle at 32% 28%, var(--c-cyan), var(--c-accent) 58%, var(--c-accent-ink));
+  box-shadow: 0 18px 36px rgba(91, 123, 176, 0.32);
+  animation: hero-float-a 7s var(--ease-in-out) infinite;
+}
+
+.hero-planet--md {
+  width: 16%;
+  aspect-ratio: 1;
+  bottom: 14%;
+  right: 10%;
+  background: radial-gradient(circle at 34% 30%, #f6e6c4, var(--c-champagne) 55%, #d9c39a);
+  box-shadow: 0 14px 28px rgba(217, 195, 154, 0.4);
+  animation: hero-float-b 9s var(--ease-in-out) infinite;
+}
+
+.hero-planet--sm {
+  width: 11%;
+  aspect-ratio: 1;
+  top: 22%;
+  left: 8%;
+  background: radial-gradient(circle at 34% 30%, var(--c-cyan), var(--c-blue) 60%, var(--c-accent));
+  box-shadow: 0 10px 20px rgba(143, 179, 224, 0.4);
+  animation: hero-float-a 8s var(--ease-in-out) infinite 1.2s;
+}
+
+@keyframes hero-float-a {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-14px); }
+}
+
+@keyframes hero-float-b {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(12px); }
+}
+
+// Glowing platform ring under the figure's feet.
+.hero-platform {
+  position: absolute;
+  left: 50%;
+  bottom: 9%;
+  width: 62%;
+  height: 16%;
+  translate: -50% 0;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, var(--glow-cool), transparent 72%);
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 32% 8%;
+    border-radius: 50%;
+    border: 1.5px solid var(--c-accent);
+    opacity: 0.5;
+    animation: hero-pulse 3.4s var(--ease-in-out) infinite;
+  }
+}
+
+@keyframes hero-pulse {
+  0%, 100% { transform: scale(0.92); opacity: 0.55; }
+  50%      { transform: scale(1.06); opacity: 0.2; }
+}
+
+.hero-figure {
+  position: absolute;
+  left: 50%;
+  bottom: 8%;
+  width: 96%;
+  // Square-ish stage for the 3D figure; idle float is driven in WebGL.
+  aspect-ratio: 4 / 5;
+  height: auto;
+  translate: -50% 0;
+  z-index: 2;
+  // Shadow follows the rendered silhouette (transparent canvas alpha).
+  filter: drop-shadow(0 26px 38px rgba(28, 27, 26, 0.24));
+}
+
+.hero-btn--hire {
+  position: absolute;
+  right: 4%;
+  bottom: 8%;
+  z-index: 2;
+  background: var(--c-accent);
+  border: 1px solid var(--c-accent-ink);
+  padding-inline: 1.85rem;
 }
 
 .hero-hint {
   position: absolute;
-  left: 50%;
+  right: var(--gutter);
   bottom: clamp(1.5rem, 5vh, 3rem);
-  translate: -50% 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 0.7rem;
 }
+
 .hero-hint-label {
   @include eyebrow;
 }
+
 .hero-hint-track {
   width: 24px;
   height: 38px;
@@ -81,11 +369,12 @@
   justify-content: center;
   padding-top: 6px;
 }
+
 .hero-hint-dot {
   width: 4px;
   height: 8px;
   border-radius: var(--r-pill);
-  background: var(--c-accent);
+  background: #00b8c8;
   animation: hint-scroll 1.8s var(--ease-in-out) infinite;
 }
 
@@ -103,5 +392,60 @@
   }
   100% {
     opacity: 0;
+  }
+}
+
+@media (max-width: 960px) {
+  .hero-name {
+    white-space: normal;
+    font-size: clamp(2.2rem, 9vw, 3.4rem);
+
+    .word {
+      white-space: normal;
+    }
+  }
+  .hero-layout {
+    grid-template-columns: 1fr;
+    gap: clamp(2rem, 6vh, 3rem);
+  }
+
+  .hero-content {
+    max-width: none;
+    text-align: center;
+    align-items: center;
+  }
+
+  .hero-greeting {
+    justify-content: center;
+  }
+
+  .hero-role {
+    justify-content: center;
+  }
+
+  .hero-actions {
+    justify-content: center;
+  }
+
+  .hero-visual {
+    width: min(100%, 380px);
+  }
+}
+
+@media (max-width: 560px) {
+  .hero-actions {
+    flex-direction: column;
+    width: 100%;
+    max-width: 18rem;
+  }
+
+  .hero-btn {
+    width: 100%;
+  }
+
+  .hero-hint {
+    left: 50%;
+    right: auto;
+    translate: -50% 0;
   }
 }

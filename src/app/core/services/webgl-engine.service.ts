@@ -159,6 +159,15 @@ export class WebGLEngineService {
 
     for (const obj of this.objects) obj.update(this.ctx);
 
+    // Subtle camera parallax so the 3D field reads behind the page.
+    const camX = this.pointer.x * 0.45;
+    const camY = this.pointer.y * 0.28;
+    const camZ = 9 - this.scroll * 2;
+    this.camera.position.x += (camX - this.camera.position.x) * 0.04;
+    this.camera.position.y += (camY - this.camera.position.y) * 0.04;
+    this.camera.position.z += (camZ - this.camera.position.z) * 0.04;
+    this.camera.lookAt(0, 0, -1);
+
     if (this.composer) this.composer.render();
     else this.renderer.render(this.scene, this.camera);
   };

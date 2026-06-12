@@ -1,0 +1,33 @@
+// BounceCards — ViewEncapsulation.None, so every rule is scoped under
+// .bounce-cards to avoid leaking the generic .card / .image selectors.
+
+.bounce-cards {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  // width/height come from the host bindings (containerWidth/containerHeight).
+}
+
+// Absolutely-positioned children of the flex box are each centred, then the
+// per-card transform (set inline from transformStyles) fans them out.
+.bounce-cards .card {
+  position: absolute;
+  will-change: transform;
+}
+
+// Image-card framing — only when a card wraps an <img class="image">.
+.bounce-cards .card:has(> .image) {
+  width: 200px;
+  aspect-ratio: 1;
+  border: 5px solid #fff;
+  border-radius: 25px;
+  overflow: hidden;
+  box-shadow: var(--shadow-lg, 0 4px 10px rgba(0, 0, 0, 0.2));
+}
+
+.bounce-cards .card .image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}

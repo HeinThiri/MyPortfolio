@@ -7,352 +7,414 @@
   overflow: hidden;
 }
 
-// Heading on the left, tech-stack orbit on the right. The orbit column is a
-// capped, fluid width so it never overflows the container's right gutter.
-.skills-top {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) clamp(300px, 24vw, 380px);
-  gap: clamp(1.5rem, 5vw, 4rem);
-  align-items: start;
-  margin-bottom: clamp(2.5rem, 6vh, 4.5rem);
-}
-
-.skills-head {
-  h2 {
-    font-size: 41px;
-    margin-top: 1rem;
-  }
-}
-
-/* ---- Personal achievements (compact chips under the heading) -------- */
-.achievements {
-  list-style: none;
-  margin: clamp(1.5rem, 3.5vh, 2.75rem) 0 0;
-  padding: 0;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.6rem;
-}
-
-.achievement {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.55rem;
-  padding: 0.5rem 0.95rem;
-  border-radius: var(--r-pill);
-  font-size: var(--fs-small);
-  font-weight: 500;
-  color: var(--c-ink-soft);
-  background: var(--c-bg-elev);
-  border: 1px solid var(--c-line);
-  box-shadow: var(--shadow-sm);
-  transition:
-    transform 0.3s var(--ease-out-soft),
-    box-shadow 0.3s var(--ease-out-soft),
-    color 0.3s var(--ease-out-soft);
-
-  // Small champagne dot.
-  &::before {
-    content: '';
-    flex: none;
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #f6e7bd, var(--c-champagne));
-    box-shadow: 0 0 6px rgba(184, 137, 58, 0.5);
-  }
-
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-md);
-    color: var(--c-accent-ink);
-  }
-}
-
-.skills-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: clamp(1rem, 2vw, 1.8rem);
-}
-
-.skill-card {
-  padding: clamp(1.6rem, 2.4vw, 2.4rem);
-  border-radius: var(--r-lg);
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  transition:
-    transform var(--dur-med) var(--ease-out-soft),
-    box-shadow var(--dur-med) var(--ease-out-soft);
-  &:hover {
-    transform: translateY(-6px);
-    box-shadow: var(--shadow-lg), var(--shadow-glow);
-  }
-}
-.skill-card-title {
-  font-size: var(--fs-h3);
-}
-.skill-card-blurb {
-  color: var(--c-ink-muted);
-  font-size: var(--fs-body);
-}
-.skill-list {
-  list-style: none;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-top: auto;
-}
-.skill-chip {
-  padding: 0.35rem 0.8rem;
-  border-radius: var(--r-pill);
-  font-size: var(--fs-small);
-  color: var(--c-ink-soft);
-  background: rgba(255, 255, 255, 0.5);
-  border: 1px solid var(--c-line);
-}
-
-/* ---- Tech-stack constellation (frosted glass) ------------------------ */
-// A faceted glass-crystal core orbited by frosted-glass coins on a faint
-// concentric grid — all in the site's light glass material, no panel fill.
-$glass-hi: rgba(255, 255, 255, 0.82); // lit facet
-$glass-lo: rgba(199, 204, 212, 0.38); // shaded silver facet
-$glass-tint: rgba(143, 179, 224, 0.16); // soft-blue base tint
-
-.tech-orbit {
+// Content sits above the decorative orb.
+.skills-inner {
   position: relative;
-  width: 100%;
-  max-width: 100%;
-  aspect-ratio: 1;
-  margin-inline: auto;
-  align-self: center; // float centered against the taller achievements list
-  // Nudge the orbit left so it pulls clear of the right edge.
-  transform: translateX(clamp(-2.5rem, -3vw, -1rem));
-  display: grid;
-  place-items: center;
-  --r: clamp(76px, 11vw, 184px); // orbit radius
-  --isz: clamp(40px, 4.8vw, 84px); // icon tile size
-
-  // Concentric rings + radial spokes — faint dark lines, fading to the edge.
-  &::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-    pointer-events: none;
-    background:
-      repeating-conic-gradient(
-        from 0deg at 50% 50%,
-        var(--c-line) 0 0.35deg,
-        transparent 0.35deg 15deg
-      ),
-      repeating-radial-gradient(
-        circle at 50% 50%,
-        var(--c-line) 0 1px,
-        transparent 1px 42px
-      );
-    -webkit-mask-image: radial-gradient(circle at 50% 50%, #000 56%, transparent 84%);
-    mask-image: radial-gradient(circle at 50% 50%, #000 56%, transparent 84%);
-  }
-}
-
-// Thin circle the coins sit on.
-.orbit-frame {
-  position: absolute;
   z-index: 1;
-  width: calc(var(--r) * 2);
-  height: calc(var(--r) * 2);
-  border-radius: 50%;
-  border: 1px solid var(--c-line);
-  pointer-events: none;
 }
 
-.orbit-core {
+/* ---- Glowing energy orb -------------------------------------------- */
+// A soft, volumetric plasma sphere floating in the centre gap. Pure CSS:
+// a luminous core, a slowly swirling plasma layer, and a drifting highlight.
+.skills-orb {
   position: absolute;
-  z-index: 3;
-  width: clamp(80px, 11vw, 116px);
-  aspect-ratio: 1;
-  display: grid;
-  place-items: center;
-  font-size: var(--fs-small);
-  letter-spacing: 0.06em;
-  color: var(--c-accent-ink);
-  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.7);
-
-  // Soft pulsing aura.
-  &::after {
-    content: '';
-    position: absolute;
-    inset: 2px;
-    border-radius: 50%;
-    border: 1px solid var(--c-line);
-    animation: orbit-pulse 3.2s var(--ease-in-out) infinite;
-  }
-
-  .serif {
-    position: relative;
-    z-index: 1;
-  }
-}
-
-// Faceted glass crystal behind the "stack" label — 8 frosted facets radiating
-// from a bright table, frosting the page through it.
-.orbit-gem {
-  position: absolute;
-  z-index: 0;
-  width: 90%;
-  height: 90%;
-  clip-path: polygon(
-    50% 0,
-    85% 15%,
-    100% 50%,
-    85% 85%,
-    50% 100%,
-    15% 85%,
-    0 50%,
-    15% 15%
-  );
-  background:
-    // Facet seam lines at every 45° boundary.
-    repeating-conic-gradient(
-      from -0.6deg at 50% 50%,
-      rgba(28, 27, 26, 0.12) 0 1deg,
-      transparent 1deg 45deg
-    ),
-    // Bright table highlight.
-    radial-gradient(circle at 50% 38%, rgba(255, 255, 255, 0.95) 0 12%, transparent 52%),
-    // 8 alternating frosted facets.
-    conic-gradient(
-      from 0deg at 50% 50%,
-      #{$glass-hi} 0 45deg,
-      #{$glass-lo} 45deg 90deg,
-      #{$glass-hi} 90deg 135deg,
-      #{$glass-lo} 135deg 180deg,
-      #{$glass-hi} 180deg 225deg,
-      #{$glass-lo} 225deg 270deg,
-      #{$glass-hi} 270deg 315deg,
-      #{$glass-lo} 315deg 360deg
-    ),
-    #{$glass-tint};
-  backdrop-filter: blur(8px) saturate(150%);
-  -webkit-backdrop-filter: blur(8px) saturate(150%);
-  filter: drop-shadow(0 8px 18px rgba(28, 27, 26, 0.18));
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.55);
-
-  // Bright diamond "table" facet at the centre.
-  &::after {
-    content: '';
-    position: absolute;
-    inset: 30%;
-    clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(199, 204, 212, 0.6));
-    box-shadow:
-      inset 0 0 6px rgba(255, 255, 255, 0.9),
-      0 0 3px rgba(28, 27, 26, 0.18);
-  }
-}
-
-.orbit-ring {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  animation: orbit-spin 34s linear infinite;
-}
-
-// Zero-size anchor placed on the circle at angle --a.
-.orbit-item {
-  position: absolute;
-  top: 50%;
+  top: 46%;
   left: 50%;
-  width: 0;
-  height: 0;
-  transform: rotate(var(--a)) translateX(var(--r));
-}
-
-// Cancels the item's angle so the coin sits upright within the ring.
-.orbit-icon-wrap {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: var(--isz);
-  height: var(--isz);
-  margin: calc(var(--isz) / -2);
-  transform: rotate(calc(-1 * var(--a)));
-}
-
-// Frosted-glass coin with a light face holding the brand logo; counter-spins
-// the ring so the logo stays upright.
-.orbit-icon {
-  position: relative;
-  width: 100%;
-  height: 100%;
+  translate: -50% -50%;
+  z-index: 0;
+  width: clamp(280px, 34vw, 520px);
+  aspect-ratio: 1;
   border-radius: 50%;
-  display: grid;
-  place-items: center;
-  @include glass(0.55, 12px, 0.7);
-  animation: orbit-spin-rev 34s linear infinite;
-  transition:
-    transform 0.35s var(--ease-out-soft),
-    box-shadow 0.35s var(--ease-out-soft);
+  pointer-events: none;
 
-  // Light face the logo sits on.
+  // Luminous volumetric core fading to a soft atmosphere.
+  background: radial-gradient(
+    circle at 50% 42%,
+    rgba(255, 255, 255, 0.96) 0%,
+    rgba(233, 243, 255, 0.78) 26%,
+    rgba(193, 215, 247, 0.42) 50%,
+    rgba(160, 190, 235, 0.18) 66%,
+    transparent 74%
+  );
+  // Outer atmospheric glow.
+  box-shadow:
+    0 0 90px 30px rgba(207, 224, 255, 0.45),
+    0 36px 100px -22px rgba(120, 150, 210, 0.35);
+  animation: orb-breathe 9s var(--ease-in-out) infinite;
+
+  // Swirling plasma band.
   &::before {
+    content: '';
+    position: absolute;
+    inset: 6%;
+    border-radius: 50%;
+    background: conic-gradient(
+      from 0deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(180, 215, 255, 0.5) 14%,
+      rgba(255, 255, 255, 0) 35%,
+      rgba(202, 226, 255, 0.46) 58%,
+      rgba(255, 255, 255, 0) 82%,
+      rgba(190, 220, 255, 0.42) 100%
+    );
+    filter: blur(20px);
+    animation: orb-spin 26s linear infinite;
+  }
+
+  // Drifting bright highlight + secondary bloom.
+  &::after {
     content: '';
     position: absolute;
     inset: 13%;
     border-radius: 50%;
-    background: radial-gradient(circle at 38% 30%, #ffffff, #eef2f6 68%, #dbe2ea);
-    box-shadow:
-      inset 0 2px 4px rgba(255, 255, 255, 0.9),
-      inset 0 -3px 6px rgba(28, 27, 26, 0.12);
-  }
-
-  img {
-    position: relative;
-    z-index: 1;
-    width: 52%;
-    height: 52%;
-    object-fit: contain; // original brand colors
+    background:
+      radial-gradient(circle at 42% 34%, rgba(255, 255, 255, 0.95), transparent 46%),
+      radial-gradient(circle at 64% 64%, rgba(206, 232, 255, 0.6), transparent 52%);
+    filter: blur(12px);
+    animation: orb-spin-rev 32s linear infinite;
   }
 }
 
-.orbit-icon:hover {
-  transform: scale(1.12);
-  box-shadow: var(--shadow-lg);
+@keyframes orb-breathe {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.045);
+  }
 }
-
-// Pause the whole system on hover for closer inspection.
-.tech-orbit:hover .orbit-ring,
-.tech-orbit:hover .orbit-icon {
-  animation-play-state: paused;
-}
-
-@keyframes orbit-spin {
+@keyframes orb-spin {
   to {
     transform: rotate(360deg);
   }
 }
-@keyframes orbit-spin-rev {
+@keyframes orb-spin-rev {
   to {
     transform: rotate(-360deg);
   }
 }
-@keyframes orbit-pulse {
+
+@media (prefers-reduced-motion: reduce) {
+  .skills-orb,
+  .skills-orb::before,
+  .skills-orb::after {
+    animation: none;
+  }
+}
+
+// Heading on the left, tech-stack orbit on the right. The orbit column is a
+// capped, fluid width so it never overflows the container's right gutter.
+.skills-top {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) clamp(360px, 32vw, 560px);
+  gap: clamp(1.5rem, 5vw, 4rem);
+  align-items: center;
+  margin-bottom: clamp(2.5rem, 6vh, 4.5rem);
+}
+
+.skills-head {
+  max-width: 67ch;
+}
+
+.skills-title {
+  font-size: var(--fs-h2);
+  line-height: var(--lh-snug);
+  margin-top: clamp(0.9rem, 2vh, 1.4rem);
+
+  // Serif italic accent word ("Expertise") in the soft accent ink.
+  .serif {
+    color: var(--c-accent-ink);
+  }
+}
+
+.skills-lead {
+  margin-top: clamp(1rem, 2.2vh, 1.5rem);
+  color: var(--c-ink-muted);
+  font-size: var(--fs-lead);
+  line-height: var(--lh-body);
+}
+
+/* ---- Services (what I deliver) -------------------------------------- */
+.services {
+  list-style: none;
+  margin: clamp(1.75rem, 4vh, 3rem) 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.service {
+  display: flex;
+  align-items: center;
+  gap: clamp(0.9rem, 2vw, 1.4rem);
+  padding: clamp(0.85rem, 1.8vh, 1.25rem) 0;
+  border-top: 1px solid var(--c-line);
+  transition: transform 0.4s var(--ease-out-soft);
+
+  &:last-child {
+    border-bottom: 1px solid var(--c-line);
+  }
+
+  &:hover {
+    transform: translateX(0.4rem);
+  }
+}
+
+// Small accent diamond marker that brightens on hover.
+.service-mark {
+  flex: none;
+  width: 10px;
+  height: 10px;
+  rotate: 45deg;
+  border-radius: 2px;
+  background: var(--grad-accent);
+  box-shadow: 0 0 0 4px rgba(126, 156, 201, 0.12);
+  transition:
+    box-shadow 0.4s var(--ease-out-soft),
+    transform 0.4s var(--ease-out-soft);
+
+  .service:hover & {
+    transform: scale(1.15);
+    box-shadow: 0 0 0 6px rgba(126, 156, 201, 0.18);
+  }
+}
+
+.service-body {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.25rem 0.9rem;
+}
+
+.service-name {
+  font-family: var(--font-display);
+  font-size: var(--fs-h3);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--c-ink);
+}
+
+.service-note {
+  font-size: var(--fs-small);
+  color: var(--c-ink-muted);
+}
+
+/* ---- Headline stats ------------------------------------------------- */
+.stats {
+  list-style: none;
+  margin: clamp(1.6rem, 3.5vh, 2.5rem) 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(1.5rem, 4vw, 3rem);
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.stat-value {
+  font-family: var(--font-display);
+  font-size: clamp(1.7rem, 3vw, 2.4rem);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  @include gradient-text;
+}
+
+.stat-label {
+  font-size: var(--fs-micro);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--c-ink-muted);
+}
+
+/* ---- Tech-stack keyboard (3D perspective deck) ---------------------- */
+// A real keyboard on a desk, tilted back and seen from a low angle. Each
+// keycap is an extruded cuboid (top + front + side faces) with real thickness.
+.kb-stage {
+  position: relative;
+  align-self: center;
+  width: 100%;
+  perspective: 1500px;
+  perspective-origin: 50% 24%;
+}
+
+// Frosted-glass deck base — tilted identically to the keyboard so it sits
+// exactly beneath the keys. Kept separate because backdrop-filter would flatten
+// the keyboard's preserve-3d context.
+.kb-base {
+  position: absolute;
+  inset: 0;
+  border-radius: clamp(18px, 2.6vw, 28px);
+  transform-origin: center;
+  transform: rotateX(58deg) rotateZ(-2deg) rotateY(-10deg);
+  background:
+    radial-gradient(120% 90% at 28% 0%, rgba(160, 120, 255, 0.28), transparent 58%),
+    linear-gradient(160deg, rgba(255, 255, 255, 0.16), rgba(120, 110, 170, 0.07));
+  backdrop-filter: blur(18px) saturate(150%);
+  -webkit-backdrop-filter: blur(18px) saturate(150%);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.45),
+    inset 0 0 30px rgba(255, 255, 255, 0.08),
+    0 50px 80px -34px rgba(8, 6, 24, 0.55);
+}
+
+.keyboard {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-flow: dense;
+  gap: clamp(0.6rem, 1.5vw, 1.1rem);
+  padding: clamp(1.1rem, 2.8vw, 2rem);
+  background: transparent;
+  // Low-angle 3D tilt of the whole deck.
+  transform-style: preserve-3d;
+  transform: rotateX(58deg) rotateZ(-2deg) rotateY(-10deg);
+  --H: clamp(15px, 1.9vw, 24px); // keycap thickness
+}
+
+.key-wrap {
+  position: relative;
+  transform-style: preserve-3d;
+  // Gentle idle bob toward the camera (along the deck normal).
+  animation: key-float 5.5s var(--ease-in-out) infinite;
+  animation-delay: calc(var(--i) * -0.42s);
+}
+.key-wrap--lg {
+  grid-column: span 2;
+}
+
+/* ---- Keycap (extruded cuboid, links to the tech's site) ------------ */
+.key {
+  display: block;
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+  transform-style: preserve-3d;
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.18s cubic-bezier(0.34, 1.56, 0.5, 1);
+
+  &:focus-visible {
+    outline: 2px solid var(--c-accent);
+    outline-offset: 4px;
+  }
+}
+.key-wrap--lg .key {
+  aspect-ratio: 2.2 / 1;
+}
+
+// Raised top face holding the logo + name.
+.key__top {
+  position: absolute;
+  inset: 0;
+  border-radius: clamp(8px, 1.2vw, 13px);
+  transform: translateZ(var(--H));
+  background: linear-gradient(180deg, var(--face1), var(--face2));
+  box-shadow:
+    inset 0 2px 1px rgba(255, 255, 255, 0.35),
+    inset 0 -4px 6px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8%;
+  padding: 12%;
+  transition: box-shadow 0.18s var(--ease-out-soft);
+}
+.key-wrap--lg .key__top {
+  flex-direction: row;
+  gap: 9%;
+  padding: 0 12%;
+}
+
+// Front wall — faces the camera at the low angle.
+.key__front {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: var(--H);
+  transform-origin: bottom;
+  transform: rotateX(-90deg);
+  border-radius: 0 0 4px 4px;
+  background: linear-gradient(180deg, var(--side), color-mix(in srgb, var(--side) 55%, #000));
+}
+
+// Right side wall.
+.key__side {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: var(--H);
+  height: 100%;
+  transform-origin: right;
+  transform: rotateY(90deg);
+  border-radius: 0 4px 4px 0;
+  background: linear-gradient(90deg, color-mix(in srgb, var(--side) 70%, #000), var(--side));
+}
+
+// Press the cap down into the deck on hover.
+.key:hover {
+  transform: translateZ(calc(var(--H) * -0.62));
+}
+.key:hover .key__top {
+  box-shadow:
+    inset 0 2px 1px rgba(255, 255, 255, 0.35),
+    inset 0 -4px 6px rgba(0, 0, 0, 0.25),
+    0 0 28px var(--glow);
+}
+
+.key-logo {
+  width: 40%;
+  max-width: 44px;
+  aspect-ratio: 1;
+  object-fit: contain;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3));
+}
+.key-wrap--lg .key-logo {
+  width: auto;
+  height: 54%;
+  max-width: 38px;
+}
+
+.key-name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(0.54rem, 0.8vw, 0.76rem);
+  letter-spacing: -0.01em;
+  color: var(--text);
+  white-space: nowrap;
+}
+
+/* ---- Keycaps (white) ------------------------------------------------ */
+// White keycaps; each key's brand colour (--c) only drives the hover glow.
+.key {
+  --c: #7c3aed; // fallback brand colour (hover glow only)
+  --face1: #fcfcff;
+  --face2: #e9e9f1;
+  --side: #c4c4cf;
+  --text: #1b1a1f;
+  --glow: color-mix(in srgb, var(--c) 55%, transparent);
+}
+
+@keyframes key-float {
   0%,
   100% {
-    transform: scale(1);
-    opacity: 0.6;
+    transform: translateZ(0);
   }
   50% {
-    transform: scale(1.16);
-    opacity: 0;
+    transform: translateZ(7px);
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .orbit-ring,
-  .orbit-icon,
-  .orbit-core::after {
+  .key-wrap {
     animation: none;
   }
 }
@@ -364,10 +426,18 @@ $glass-tint: rgba(143, 179, 224, 0.16); // soft-blue base tint
   .skills-head {
     max-width: none;
   }
-  .skills-grid {
-    grid-template-columns: 1fr;
+  .kb-stage {
+    max-width: 560px;
+    margin-inline: auto;
   }
-  .tech-orbit {
-    max-width: 300px;
+}
+
+@media (max-width: 460px) {
+  .keyboard {
+    gap: 0.5rem;
+    padding: 0.9rem;
+  }
+  .key-name {
+    font-size: 0.5rem;
   }
 }

@@ -1,0 +1,152 @@
+<section id="services" class="svc" [class.is-revealed]="revealed()" aria-label="Services">
+  <div class="svc-bg" aria-hidden="true">
+    <span class="svc-blob svc-blob--1"></span>
+    <span class="svc-blob svc-blob--2"></span>
+    <span class="svc-grid-lines"></span>
+  </div>
+
+  <div class="container svc-grid">
+    <!-- Left: floating device + glass cards -->
+    <div
+      #vis
+      class="svc-visual"
+      [style.--px]="px()"
+      [style.--py]="py()"
+      (pointermove)="onMove($event, vis)"
+      (pointerleave)="onLeave()"
+    >
+      <div class="svc-device" aria-hidden="true">
+        <!-- Desktop window -->
+        <span class="ph-glow"></span>
+        <div class="ph">
+          <span class="ph-notch"></span>
+          <div class="ph-screen">
+            <div class="ph-status">
+              <span class="ph-time">9:41</span>
+              <span class="ph-sig"></span>
+            </div>
+
+            <div class="ph-head">
+              <span class="ph-avatar"></span>
+              <span class="ph-head-lines"><b></b><i></i></span>
+              <span class="ph-ico"></span>
+            </div>
+
+            <div class="ph-hero">
+              <span class="ph-hero-label">Website Traffic</span>
+              <span class="ph-hero-val">48,250</span>
+              <span class="ph-hero-trend">▲ 38%</span>
+            </div>
+
+            <div class="ph-chart">
+              <span style="--h: 44%"></span>
+              <span style="--h: 70%"></span>
+              <span style="--h: 38%"></span>
+              <span style="--h: 86%"></span>
+              <span style="--h: 56%"></span>
+              <span style="--h: 96%"></span>
+              <span style="--h: 64%"></span>
+              <svg class="ph-line" viewBox="0 0 100 40" preserveAspectRatio="none">
+                <path d="M0 30 L16 22 L34 26 L52 12 L70 18 L86 6 L100 10" />
+              </svg>
+            </div>
+
+            <div class="ph-kpis">
+              <div class="ph-kpi"><b>12.4k</b><i>Active Users</i></div>
+              <div class="ph-kpi ph-kpi--accent"><b>99</b><i>Performance</i></div>
+            </div>
+
+            <ul class="ph-rows">
+              <li><span class="ph-row-ic"></span><span class="ph-row-l"></span><span class="ph-row-v"></span></li>
+              <li><span class="ph-row-ic"></span><span class="ph-row-l"></span><span class="ph-row-v"></span></li>
+              <li><span class="ph-row-ic"></span><span class="ph-row-l"></span><span class="ph-row-v"></span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Floating metric cards -->
+      @for (c of floatCards; track c.label) {
+        <div
+          class="svc-float"
+          [style.--x.%]="c.x"
+          [style.--y.%]="c.y"
+          [style.--rot]="c.rot + 'deg'"
+          [style.--delay]="c.delay + 's'"
+        >
+          <span class="svc-float-ico">
+            @switch (c.icon) {
+              @case ('web') {
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 8h18"/></svg>
+              }
+              @case ('bolt') {
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 4 14h7l-1 8 9-12h-7l1-8Z"/></svg>
+              }
+              @case ('database') {
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5"/><path d="M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg>
+              }
+              @case ('pen') {
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19l7-7a2.8 2.8 0 0 0-4-4l-7 7-1.5 5.5L12 19Z"/><path d="M15 8l-9 9"/></svg>
+              }
+              @case ('devices') {
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="14" height="11" rx="2"/><path d="M2 19h10"/><rect x="16" y="9" width="6" height="11" rx="1.5"/></svg>
+              }
+              @default {
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="m4 18 5-5 4 4 3-3 4 4"/></svg>
+              }
+            }
+          </span>
+          <span class="svc-float-text">
+            <span class="svc-float-val">{{ c.value }}</span>
+            <span class="svc-float-label">{{ c.label }}</span>
+          </span>
+          <span class="svc-float-arrow" aria-hidden="true">→</span>
+        </div>
+      }
+    </div>
+
+    <!-- Right: heading, stats, service cards -->
+    <div class="svc-content">
+      <p class="eyebrow">(03) — What we do</p>
+      <h2 class="svc-title">Digital Solutions That Drive Business Growth</h2>
+      <p class="svc-sub">
+        We build powerful digital experiences that help businesses establish a
+        strong online presence, streamline operations, improve customer
+        engagement and accelerate growth through innovative technology.
+      </p>
+
+      <ul class="svc-stats" aria-label="Company statistics">
+        @for (s of stats; track s.label; let i = $index) {
+          <li class="svc-stat">
+            <span class="svc-stat-val">{{ counts()[i] }}{{ s.suffix }}</span>
+            <span class="svc-stat-label">{{ s.label }}</span>
+          </li>
+        }
+      </ul>
+
+    </div>
+  </div>
+
+  <!-- Technology stack -->
+  <!-- <div class="container svc-tech">
+    <header class="svc-tech-head">
+      <p class="eyebrow">Technology</p>
+      <h3>Built on a modern, scalable stack</h3>
+    </header>
+    <div class="svc-tech-grid">
+      @for (g of techGroups; track g.label; let i = $index) {
+        <article class="tech-group" [style.--i]="i">
+          <h4 class="tech-group-title">{{ g.label }}</h4>
+          <ul class="tech-list">
+            @for (t of g.items; track t.name) {
+              <li class="tech-chip" data-cursor="hover">
+                <img [src]="t.icon" [alt]="t.name" loading="lazy" />
+                <span>{{ t.name }}</span>
+              </li>
+            }
+          </ul>
+        </article>
+      }
+    </div>
+  </div> -->
+</section>

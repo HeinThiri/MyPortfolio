@@ -1,0 +1,190 @@
+@if (project(); as p) {
+  <article class="pd">
+    <!-- Hero -->
+    <header class="pd-hero">
+      <div class="pd-hero-media" [style.background]="p.accent">
+        <img class="pd-hero-img" [src]="p.hero" [alt]="p.title" />
+        <div class="pd-hero-scrim" aria-hidden="true"></div>
+      </div>
+
+      <div class="container pd-hero-inner">
+        <nav class="pd-breadcrumb" aria-label="Breadcrumb">
+          <a routerLink="/">Home</a>
+          <span aria-hidden="true">/</span>
+          <a routerLink="/" fragment="projects">Work</a>
+          <span aria-hidden="true">/</span>
+          <span class="pd-breadcrumb-current">{{ p.title }}</span>
+        </nav>
+
+        <span class="pd-cat">{{ p.category }}</span>
+        <h1 class="pd-title" auroraReveal="text">{{ p.title }}</h1>
+        <p class="pd-tagline serif italic">{{ p.tagline }}</p>
+
+        <ul class="pd-hero-meta">
+          <li><span>Client</span><strong>{{ p.client }}</strong></li>
+          <li><span>Industry</span><strong>{{ p.industry }}</strong></li>
+          @if (p.role) {
+            <li><span>Role</span><strong>{{ p.role }}</strong></li>
+          }
+          @if (p.year) {
+            <li><span>Year</span><strong>{{ p.year }}</strong></li>
+          }
+        </ul>
+      </div>
+    </header>
+
+    <!-- Overview -->
+    <section class="pd-section container pd-overview">
+      <div class="pd-overview-main">
+        <p class="eyebrow" auroraReveal>Overview</p>
+        <p class="pd-lead" auroraReveal="blur">{{ p.overview }}</p>
+      </div>
+      <aside class="pd-meta-card" auroraReveal>
+        <dl>
+          <div><dt>Client</dt><dd>{{ p.client }}</dd></div>
+          <div><dt>Industry</dt><dd>{{ p.industry }}</dd></div>
+          @if (p.role) {
+            <div><dt>Role</dt><dd>{{ p.role }}</dd></div>
+          }
+          <div><dt>Category</dt><dd>{{ p.category }}</dd></div>
+        </dl>
+      </aside>
+    </section>
+
+    <!-- Objectives / Challenges / Solutions -->
+    <section class="pd-section container pd-ocs">
+      <article class="pd-ocs-card" auroraReveal>
+        <span class="pd-ocs-tag">Objectives</span>
+        <ul>
+          @for (o of p.objectives; track o) {
+            <li>{{ o }}</li>
+          }
+        </ul>
+      </article>
+      <article class="pd-ocs-card" auroraReveal>
+        <span class="pd-ocs-tag">Challenges</span>
+        <ul>
+          @for (c of p.challenges; track c) {
+            <li>{{ c }}</li>
+          }
+        </ul>
+      </article>
+      <article class="pd-ocs-card" auroraReveal>
+        <span class="pd-ocs-tag">Solutions</span>
+        <ul>
+          @for (s of p.solutions; track s) {
+            <li>{{ s }}</li>
+          }
+        </ul>
+      </article>
+    </section>
+
+    <!-- Results & impact (KPIs) -->
+    @if (p.results.length) {
+      <section class="pd-section container pd-results">
+        <header class="pd-section-head">
+          <p class="eyebrow" auroraReveal>Impact</p>
+          <h2 auroraReveal="text">Results that matter</h2>
+        </header>
+        <div class="pd-kpis">
+          @for (r of p.results; track r.label) {
+            <article class="pd-kpi" auroraReveal>
+              <span class="pd-kpi-value">{{ r.value }}</span>
+              <span class="pd-kpi-label">{{ r.label }}</span>
+            </article>
+          }
+        </div>
+      </section>
+    }
+
+    <!-- Key features -->
+    <section class="pd-section container">
+      <header class="pd-section-head">
+        <p class="eyebrow" auroraReveal>Key Features</p>
+        <h2 auroraReveal="text">What it does</h2>
+      </header>
+      <div class="pd-features">
+        @for (f of p.features; track f.title) {
+          <article class="pd-feature" auroraReveal>
+            <span class="pd-feature-mark" aria-hidden="true"></span>
+            <h3>{{ f.title }}</h3>
+            <p>{{ f.detail }}</p>
+          </article>
+        }
+      </div>
+    </section>
+
+    <!-- Process -->
+    @if (p.process.length) {
+      <section class="pd-section container pd-process-sec">
+        <header class="pd-section-head">
+          <p class="eyebrow" auroraReveal>Process</p>
+          <h2 auroraReveal="text">How it was built</h2>
+        </header>
+        <ol class="pd-process">
+          @for (s of p.process; track s.phase) {
+            <li class="pd-step" auroraReveal>
+              <span class="pd-step-num">{{ s.phase }}</span>
+              <h3>{{ s.title }}</h3>
+              <p>{{ s.detail }}</p>
+            </li>
+          }
+        </ol>
+      </section>
+    }
+
+    <!-- Tech stack -->
+    <section class="pd-section container pd-tech">
+      <header class="pd-section-head">
+        <p class="eyebrow" auroraReveal>Technology Stack</p>
+        <h2 auroraReveal="text">Built with</h2>
+      </header>
+      <ul class="pd-tech-list" auroraReveal>
+        @for (t of p.stack; track t) {
+          <li>{{ t }}</li>
+        }
+      </ul>
+    </section>
+
+    <!-- Testimonial -->
+    @if (p.testimonial; as t) {
+      <section class="pd-section container">
+        <figure class="pd-quote" auroraReveal>
+          <span class="pd-quote-mark" aria-hidden="true">“</span>
+          <blockquote>{{ t.quote }}</blockquote>
+          <figcaption>
+            <strong>{{ t.author }}</strong>
+            <span>{{ t.role }}</span>
+          </figcaption>
+        </figure>
+      </section>
+    }
+
+    <!-- Related -->
+    @if (related().length) {
+      <section class="pd-section container">
+        <header class="pd-section-head">
+          <p class="eyebrow" auroraReveal>More Work</p>
+          <h2 auroraReveal="text">Related projects</h2>
+        </header>
+        <div class="pd-related">
+          @for (r of related(); track r.slug) {
+            <aurora-project-card [project]="r" auroraReveal />
+          }
+        </div>
+      </section>
+    }
+
+    <!-- CTA -->
+    <section class="container">
+      <div class="pd-cta" auroraReveal>
+        <h2>Have a project in mind?</h2>
+        <p>Let’s build something people remember.</p>
+        <a class="pd-cta-btn" routerLink="/" fragment="contact" data-cursor="hover">
+          Start a project
+          <span aria-hidden="true">→</span>
+        </a>
+      </div>
+    </section>
+  </article>
+}
